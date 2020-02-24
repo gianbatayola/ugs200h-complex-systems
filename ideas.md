@@ -3,4 +3,6 @@
 Ideas:
 
 Changing personality/strategy
+
 Shuffling position
+
