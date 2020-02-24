@@ -73,7 +73,7 @@ end
 to create-turtle  ;; patch procedure
   sprout 1 [
     set wealth random 100
-    if wealth > 75 [ set color green]
+    if wealth > 75 [ set color gree]
     if wealth <= 75 and wealth > 50 [ set color blue ]
     if wealth <= 50 and wealth > 25 [ set color yellow ]
     if wealth <= 25 [ set color red ]
@@ -131,7 +131,7 @@ end
 
 to transact
   ;; give a dollar to another turtle
-  set wealth wealth + 1
+  set wealth wealth - 1
   ask one-of other turtles [ set wealth wealth + 1 ]
 end
 
@@ -172,7 +172,7 @@ to interact  ;; turtle procedure
         set coopother coopother + 1
         set coopother-agg coopother-agg + 1
 
-        ;ask myself [ set wealth wealth * exchange_rate ];;Change these lines
+        ;; ask myself [ set wealth wealth * exchange_rate ];;Change these lines
         ;;set ptr ptr + gain-of-receiving
 
       ]
@@ -373,8 +373,8 @@ GRAPHICS-WINDOW
 50
 0
 50
-1
-1
+0
+0
 1
 ticks
 30.0
@@ -580,7 +580,7 @@ exchange_rate
 exchange_rate
 0.01
 1
-1.0
+0.1
 0.01
 1
 NIL

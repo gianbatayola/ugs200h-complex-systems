@@ -73,8 +73,8 @@ end
 to create-turtle  ;; patch procedure
   sprout 1 [
     set wealth random 100
-    if wealth > 75 [ set color green]
-    if wealth <= 75 and wealth > 50 [ set color blue ]
+    if wealth > 75 [ set color blue]
+    if wealth <= 75 and wealth > 50 [ set color green ]
     if wealth <= 50 and wealth > 25 [ set color yellow ]
     if wealth <= 25 [ set color red ]
     set tag wealth
