@@ -10,4 +10,8 @@
 
 ## To Do List:
 
-- [] Fix wealth transaction
+- [x] Fix wealth transaction
+- [x] Fix color assignmnent
+- [ ] Find data to analyze
+- [ ] Mutating personality
+- [ ] Remove unnecessary code
