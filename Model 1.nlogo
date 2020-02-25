@@ -26,6 +26,8 @@ globals [
   last100dd             ;; how many defect-defect genotypes have there been in the last 100 ticks
   last100consist-ethno  ;; how many interactions consistent with ethnocentrism in the last 100 ticks
   last100coop           ;; how many interactions have been cooperation in the last 100 ticks
+  me
+  you
 ]
 
 to setup-empty
@@ -67,6 +69,8 @@ to initialize-variables
   set last100meetother []
   set last100meet []
   set last100coop []
+  set me 0
+  set you 0
 end
 
 ;; creates a new agent in the world
@@ -112,7 +116,7 @@ to go
   ;; have all of the agents interact with other agents if they can
   ask turtles [ interact ]
   ;; transact and then update your location
-  ask turtles with [ wealth > 0 ] [ transact ]
+  ;;ask turtles with [ wealth > 0 ] [ transact ]
   ;; now they reproduce
   ;;ask turtles [ reproduce ]
   ;;death           ;; kill some of the agents
@@ -131,8 +135,12 @@ end
 
 to transact
   ;; give a dollar to another turtle
-  set wealth wealth - 1
-  ask one-of other turtles [ set wealth wealth + 1 ]
+  ;;set wealth wealth + 1
+  ;;ask one-of other turtles [ set wealth wealth + 1 ]
+  set me wealth
+  ask one-of other turtles [set you wealth]
+  set wealth wealth  + you * exchange_rate
+  ask one-of other turtles [set wealth wealth + me * exchange_rate]
 end
 
 to interact  ;; turtle procedure
@@ -153,6 +161,7 @@ to interact  ;; turtle procedure
       if [cooperate-with-same?] of myself [
         set coopown coopown + 1
         set coopown-agg coopown-agg + 1
+        transact
 
 
         ;;ask myself [ set wealth wealth + ( ask wealth of neighbors * exchange_rate) ];; Change these lines
@@ -171,6 +180,7 @@ to interact  ;; turtle procedure
       ifelse [cooperate-with-different?] of myself [
         set coopother coopother + 1
         set coopother-agg coopother-agg + 1
+        transact
 
         ;; ask myself [ set wealth wealth * exchange_rate ];;Change these lines
         ;;set ptr ptr + gain-of-receiving
