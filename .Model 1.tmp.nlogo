@@ -287,9 +287,9 @@ end
 
 to recolor-turtles
   set mylist sort-on[wealth]turtles
-  set percentile75 [wealth]of item 1950 mylist
-  set percentile50 [wealth] of item 1300 mylist
-  set percentile25 [wealth] of item 650 mylist
+  set percentile75 [wealth]of item floor 75 mylist
+  set percentile50 [wealth] of item floor 50 mylist
+  set percentile25 [wealth] of item floor 2 mylist
   ask turtles
   [ifelse (wealth >= percentile75)
     [set color blue]
