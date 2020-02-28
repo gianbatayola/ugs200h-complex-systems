@@ -15,6 +15,7 @@ Meeting 02/23 (Ben, Gian, Hanshi, Ashok)
 - [ ] Find data to analyze
 - [ ] Mutating personality
 - [ ] Remove unnecessary code
+
 Meeting 02/28 (Ben, Gian, Ashok, Prof.Nair)
 - [ ] Identify the interaction mechanism (understand the Von Neumann interaction order)
 - [ ] Bring back the score to base 100 after every tick (normalizing)
