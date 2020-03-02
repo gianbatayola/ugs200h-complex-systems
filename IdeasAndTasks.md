@@ -18,7 +18,7 @@ Meeting 02/23 (Ben, Gian, Hanshi, Ashok)
 
 Meeting 02/28 (Ben, Gian, Ashok, Prof.Nair)
 - [ ] Identify the interaction mechanism (understand the Von Neumann interaction order) (Ben)
-- [ ] Bring back the score to base 100 after every tick (normalizing) (Hanshi)
+- [ ] Bring back the score to base 100 after every tick (normalizing) (HanshiZ)
 - [ ] Probability of co-operating behavior will not be random (Red may not be willing to interact with red as much as blue would like to interact with blue). Rethink the co-operating behavior generation at spawn (Gian)
 - [ ] Recode the colors to White, Green, Yellow and Red (Hanshi)
 - [ ] Split exchange rate as two values (Cost of giving and Gain of receiving). Make them slider variables (Ben)
