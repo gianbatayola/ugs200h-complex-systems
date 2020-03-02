@@ -87,7 +87,7 @@ end
 to create-turtle  ;; patch procedure
   sprout 1 [
     set wealth random 100
-    if wealth > 75 [ set color blue]
+    if wealth > 75 [ set color white]
     if wealth <= 75 and wealth > 50 [ set color green ]
     if wealth <= 50 and wealth > 25 [ set color yellow ]
     if wealth <= 25 [ set color red ]
@@ -102,7 +102,7 @@ to create-turtle  ;; patch procedure
 end
 
 to-report random-color
-  report one-of [red blue yellow green]
+  report one-of [red white yellow green]
 end
 
 ;; this is used to clear stats that change between each tick
@@ -292,7 +292,7 @@ to recolor-turtles
   set percentile25 [wealth] of item 650 mylist
   ask turtles
   [ifelse (wealth >= percentile75)
-    [set color blue]
+    [set color white]
     [ifelse (wealth < percentile75 and wealth >= percentile50)
       [set color green]
       [ifelse (wealth < percentile50 and wealth >= percentile25)
