@@ -1,6 +1,6 @@
 extensions [array]
 ;; agents have a probablity to reproduce and a strategy
-turtles-own [ cooperate-with-same? cooperate-with-different? raw-wealth scaled-wealth]
+turtles-own [ cooperate-with-same? cooperate-with-different? raw-wealth scaled-wealth original]
 
 globals [
   ;; the remaining variables support the replication of published experiments
@@ -133,17 +133,57 @@ to go
 
   ;; reset the probability to reproduce
   ;;ask turtles [ set ptr initial-ptr ]
-
+  set wealth-list []
   ;; have all of the agents interact with other agents if they can
+
   ask turtles [ interact ]
+  ask turtles [addwealth]
+  set wealth-list sort-by > wealth-list
+  if length wealth-list > 0 [set scale first wealth-list / 100]
+  ask turtles[toscale]
+  get-percentiles
+  ;;ask turtles [colorandscale]
   ;; transact and then update your location
   ;;ask turtles with [ wealth > 0 ] [ transact ]
   ;; now they reproduce
   ;;ask turtles [ reproduce ]
   ;;death           ;; kill some of the agents
   update-stats    ;; update the states for the aggregate and last 100 ticks
-  recolor-turtles
+  ask turtles [recolor]
   tick
+end
+
+to get-percentiles
+  set percentile50 median wealth-list
+  let ending length wealth-list
+  let middle ending * .5
+  let lower sublist wealth-list middle ending
+  let upper sublist wealth-list 0 middle
+  set percentile75 median upper
+  set percentile25 median lower
+
+end
+
+to addwealth
+  set wealth-list fput raw-wealth wealth-list
+end
+
+to toscale
+  set scaled-wealth scale * scaled-wealth
+end
+;; random individuals enter the world on empty cells
+;;to immigrate
+  ;;let empty-patches patches with [not any? turtles-here]
+  ;; we can't have more immigrants than there are empty patches
+  ;;let how-many min list immigrants-per-day (count empty-patches)
+  ;;ask n-of how-many empty-patches [ create-turtle ]
+;;end
+
+to recolor
+  if raw-wealth > percentile75 [set color white]
+  if raw-wealth <= percentile75 and raw-wealth > percentile50 [set color green]
+  if raw-wealth <= percentile50 and raw-wealth > percentile25 [set color yellow]
+  if raw-wealth <= percentile25 [set color red]
 end
 
 ;; random individuals enter the world on empty cells
