@@ -1,3 +1,4 @@
+extensions [array]
 ;; agents have a probablity to reproduce and a strategy
 turtles-own [ ptr cooperate-with-same? cooperate-with-different? wealth tag]
 
@@ -32,7 +33,8 @@ globals [
   percentile75
   percentile50
   percentile25
-
+  counter
+  scale
 
 ]
 
@@ -86,7 +88,7 @@ end
 ;; creates a new agent in the world
 to create-turtle  ;; patch procedure
   sprout 1 [
-    set wealth random 100
+    set wealth random-normal 50 25
     if wealth > 75 [ set color white]
     if wealth <= 75 and wealth > 50 [ set color green ]
     if wealth <= 50 and wealth > 25 [ set color yellow ]
@@ -149,8 +151,8 @@ to transact
   ;;ask one-of other turtles [ set wealth wealth + 1 ]
   set me wealth
   ask one-of other turtles [set you wealth]
-  set wealth wealth  + you * exchange_rate
-  ask one-of other turtles [set wealth wealth + me * exchange_rate]
+  set wealth wealth  + you * .15
+  ask one-of other turtles [set wealth wealth + me * .15]
 end
 
 to interact  ;; turtle procedure
@@ -285,9 +287,9 @@ end
        ;; [else (wealth <= sum [ wealth ] of min-n-of (count turtles * 0.25) turtles [ wealth])
          ;; [set color red] ] ] ] ]
 
-to recolor-turtles
+to recolor-turtles                      ;; think this function needs work
   set mylist sort-on[wealth]turtles
-  set percentile75 [wealth] of item 1 mylist
+  set percentile75 [wealth] of item 1 mylist      ;; these indices seem off as well as teh fact of how do you know size?
   set percentile50 [wealth] of item 1300 mylist
   set percentile25 [wealth] of item 650 mylist
   ask turtles
@@ -299,6 +301,20 @@ to recolor-turtles
         [set color yellow]
         [set color red] ] ] ]
 
+end
+
+
+to scale100  ;; scaling everything to base 100
+  set mylist sort-on[wealth] turtles   
+  set counter 0
+  set scale  [wealth] of item 0 mylist / 100
+  while [counter < length mylist]
+  [
+    ;;set [wealth] of item counter mylist  [wealth] of item counter mylist * scale 
+    ;; change list to array to make mutable
+    set counter counter + 1
+  ]
+  
 end
 ;; this routine calculates a moving average of some stats over the last 100 ticks
 to update-stats
@@ -392,6 +408,7 @@ end
 to-report last100coop-percent
   report sum last100coop / max list 1 sum last100meet
 end
+
 
 
 ; Copyright 2003 Uri Wilensky.
