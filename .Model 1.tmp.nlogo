@@ -160,8 +160,8 @@ to transact
   ;;ask one-of other turtles [ set wealth wealth + 1 ]
   set mine raw-wealth
   ask one-of other turtles [set yours raw-wealth]
-  set raw-wealth raw-wealth  + yours * .15
-  ask one-of other turtles [set raw-wealth raw-wealth + mine * .15]
+  set raw-wealth raw-wealth  + yours * .15 - raw wealth * cost-of-giving
+  ask one-of other turtles [set raw-wealth raw-wealth + mine * .15 raw wealth * cost-of-giving]
 end
 
 to interact  ;; turtle procedure
