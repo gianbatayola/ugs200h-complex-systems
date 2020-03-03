@@ -272,8 +272,8 @@ end
 to recolor-turtles                      ;; think this function needs work
   set turtles-list sort-on[raw-wealth]turtles
   set percentile75 [raw-wealth] of item (0.75 * length(turtles-list)) turtles-list      ;; fixed hardcode
-  set percentile50 [raw-wealth] of item (0.50 * length(turtles-list)) turtles-list
-  set percentile25 [raw-wealth] of item (0.25 * length(turtles-list)) turtles-list
+  set percentile50 [raw-wealth] of item (0.50 * length(turtles-list))
+  set percentile25 [raw-wealth] of item (0.25 * length(turtles-list))
   ask turtles
   [ifelse (raw-wealth >= percentile75)
     [set color white]
@@ -398,8 +398,8 @@ end
 GRAPHICS-WINDOW
 323
 10
-485
-173
+824
+512
 -1
 -1
 9.67
@@ -413,9 +413,9 @@ GRAPHICS-WINDOW
 1
 1
 0
-15
+50
 0
-15
+50
 0
 0
 1
