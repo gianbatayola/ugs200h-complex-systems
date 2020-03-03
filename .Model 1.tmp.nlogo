@@ -1,6 +1,6 @@
 extensions [array]
 ;; agents have a probablity to reproduce and a strategy
-turtles-own [ ptr cooperate-with-same? cooperate-with-different? raw-wealth scaled-wealth]
+turtles-own [ cooperate-with-same? cooperate-with-different? raw-wealth scaled-wealth]
 
 globals [
   ;; the remaining variables support the replication of published experiments
@@ -94,9 +94,9 @@ to create-turtle  ;; patch procedure
     if raw-wealth <= 25 [ set color red ]
     set scaled-wealth raw-wealth
     ;; determine the strategy for interacting with someone of the same color
-    set cooperate-with-same? (random-float 1.0 < immigrant-chance-cooperate-with-same)
+    set cooperate-with-same? (random-float 1.0 < chance-cooperate-with-same)
     ;; determine the strategy for interacting with someone of a different color
-    set cooperate-with-different? (random-float 1.0 < immigrant-chance-cooperate-with-different)
+    set cooperate-with-different? (random-float 1.0 < chance-cooperate-with-different)
     ;; change the shape of the agent on the basis of the strategy
 
     update-shape
@@ -462,21 +462,6 @@ HORIZONTAL
 
 SLIDER
 172
-150
-318
-183
-initial-PTR
-initial-PTR
-0.0
-1.0
-0.2
-0.01
-1
-NIL
-HORIZONTAL
-
-SLIDER
-172
 184
 318
 217
@@ -582,11 +567,11 @@ SLIDER
 252
 318
 285
-immigrant-chance-cooperate-with-same
-immigrant-chance-cooperate-with-same
+chance-cooperate-with-same
+chance-cooperate-with-same
 0.0
 1.0
-0.26
+0.45
 0.01
 1
 NIL
@@ -597,11 +582,11 @@ SLIDER
 286
 318
 319
-immigrant-chance-cooperate-with-different
-immigrant-chance-cooperate-with-different
+chance-cooperate-with-different
+chance-cooperate-with-different
 0.0
 1.0
-0.5
+0.45
 0.01
 1
 NIL
@@ -616,7 +601,7 @@ exchange_rate
 exchange_rate
 0.01
 1
-0.02
+0.01
 0.01
 1
 NIL
