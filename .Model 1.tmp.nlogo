@@ -27,12 +27,12 @@ globals [
   last100dd             ;; how many defect-defect genotypes have there been in the last 100 ticks
   last100consist-ethno  ;; how many interactions consistent with ethnocentrism in the last 100 ticks
   last100coop           ;; how many interactions have been cooperation in the last 100 ticks
-  me
-  you
-  turtles-list
-  percentile75
-  percentile50
-  percentile25
+  mine                  ;; the wealth that an agent has
+  yours                 ;; the wealth that another agent has while interacting
+  turtles-list          ;; a list of turtles
+  percentile75          ;; the 75th percentile of wealth
+  percentile50          ;; the 50th percentile of wealth
+  percentile25          ;; the 25th percentile of wealth
 
 
 ]
@@ -76,8 +76,8 @@ to initialize-variables
   set last100meetother []
   set last100meet []
   set last100coop []
-  set me 0
-  set you 0
+  set mine 0
+  set yours 0
   set turtles-list []
   set percentile75 0
   set percentile50 0
@@ -151,10 +151,10 @@ to transact
   ;; give a dollar to another turtle
   ;;set wealth wealth + 1
   ;;ask one-of other turtles [ set wealth wealth + 1 ]
-  set me raw-wealth
-  ask one-of other turtles [set you raw-wealth]
-  set raw-wealth raw-wealth  + you * .15
-  ask one-of other turtles [set raw-wealth raw-wealth + me * .15]
+  set mine raw-wealth
+  ask one-of other turtles [set yours raw-wealth]
+  set raw-wealth raw-wealth  + yours * .15
+  ask one-of other turtles [set raw-wealth raw-wealth + mine * .15]
 end
 
 to interact  ;; turtle procedure
@@ -178,11 +178,6 @@ to interact  ;; turtle procedure
         transact
 
 
-        ;;ask myself [ set wealth wealth + ( ask wealth of neighbors * exchange_rate) ];; Change these lines
-                ;; I was trying to change this line to set personal wealth to personal wealth + neighbors wealth * exchange rate
-                ;; This code will be the exact same in the next section
-        ;;set ptr ptr + gain-of-receiving
-
       ]
     ]
     ;; if we are different colors we take a different strategy
@@ -196,8 +191,6 @@ to interact  ;; turtle procedure
         set coopother-agg coopother-agg + 1
         transact
 
-        ;; ask myself [ set wealth wealth * exchange_rate ];;Change these lines
-        ;;set ptr ptr + gain-of-receiving
 
       ]
       [
@@ -398,8 +391,8 @@ end
 GRAPHICS-WINDOW
 323
 10
-485
-173
+581
+269
 -1
 -1
 9.67
@@ -413,9 +406,9 @@ GRAPHICS-WINDOW
 1
 1
 0
-15
+25
 0
-15
+25
 0
 0
 1
@@ -623,7 +616,7 @@ exchange_rate
 exchange_rate
 0.01
 1
-0.1
+0.02
 0.01
 1
 NIL
