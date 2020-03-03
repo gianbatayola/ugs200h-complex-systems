@@ -1,6 +1,6 @@
 extensions [array]
 ;; agents have a probablity to reproduce and a strategy
-turtles-own [ ptr cooperate-with-same? cooperate-with-different? wealth tag]
+turtles-own [ ptr cooperate-with-same? cooperate-with-different? raw-wealth scaled-wealth tag]
 
 globals [
   ;; the remaining variables support the replication of published experiments
@@ -29,12 +29,11 @@ globals [
   last100coop           ;; how many interactions have been cooperation in the last 100 ticks
   me
   you
-  mylist
+  turtles-list
   percentile75
   percentile50
   percentile25
-  counter
-  scale
+
 
 ]
 
@@ -79,7 +78,7 @@ to initialize-variables
   set last100coop []
   set me 0
   set you 0
-  set mylist []
+  set turtles-list []
   set percentile75 0
   set percentile50 0
   set percentile25 0
@@ -288,10 +287,10 @@ end
          ;; [set color red] ] ] ] ]
 
 to recolor-turtles                      ;; think this function needs work
-  set mylist sort-on[wealth]turtles
-  set percentile75 [wealth] of item 1 mylist      ;; these indices seem off as well as teh fact of how do you know size?
-  set percentile50 [wealth] of item 1300 mylist
-  set percentile25 [wealth] of item 650 mylist
+  set turtles-list sort-on[wealth]turtles
+  set percentile75 [wealth] of item 1 turtles-list      ;; these indices seem off as well as teh fact of how do you know size?
+  set percentile50 [wealth] of item 1300 turtles-list
+  set percentile25 [wealth] of item 650 turtles-list
   ask turtles
   [ifelse (wealth >= percentile75)
     [set color white]
@@ -305,10 +304,10 @@ end
 
 
 to scale100  ;; scaling everything to base 100
-  set mylist sort-on[wealth] turtles   
+  set turtles-list sort-on[wealth] turtles   
   set counter 0
-  set scale  [wealth] of item 0 mylist / 100
-  while [counter < length mylist]
+  set scale  [wealth] of item 0 turtles-list / 100
+  while [counter < length turtles-list]
   [
     ;;set [wealth] of item counter mylist  [wealth] of item counter mylist * scale 
     ;; change list to array to make mutable
@@ -408,7 +407,6 @@ end
 to-report last100coop-percent
   report sum last100coop / max list 1 sum last100meet
 end
-
 
 
 ; Copyright 2003 Uri Wilensky.
