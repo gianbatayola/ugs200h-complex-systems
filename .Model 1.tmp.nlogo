@@ -33,7 +33,10 @@ globals [
   percentile75          ;; the 75th percentile of wealth
   percentile50          ;; the 50th percentile of wealth
   percentile25          ;; the 25th percentile of wealth
-
+  northneighborcolor    ;; color of the neighbor in north
+  eastneighborcolor     ;; color of the neighbor in east
+  southneighborcolor    ;; color of the neighbor in south
+  westneighborcolor     ;; color of the neighbor in west
 
 ]
 
@@ -117,6 +120,10 @@ to clear-stats
   set defother 0
   set meetother 0
   set coopother 0
+  set northneighborcolor 0
+  set eastneighborcolor 0
+  set southneighborcolor 0
+  set westneighborcolor 0
 end
 
 ;; the main routine
@@ -159,6 +166,11 @@ end
 
 to interact  ;; turtle procedure
 
+  ;; Capture the color of neighbors
+  set northneighborcolor (color of [turtles-at 0 1])
+  set eastneighborcolor (color of [turtles-at 1 0])
+  set southneighborcolor (color of [turtles-at 0 -1])
+  set westneighborcolor (color of [turtles-at -1 0])
   ;; interact with Von Neumann neighborhood
   ask turtles-on neighbors4 [
     ;; the commands inside the ASK are written from the point of view
@@ -172,12 +184,13 @@ to interact  ;; turtle procedure
       set meetown meetown + 1
       set meetown-agg meetown-agg + 1
       ;; if I cooperate then I reduce my PTR and increase my neighbors
-      if [cooperate-with-same?] of myself [
-        set coopown coopown + 1
-        set coopown-agg coopown-agg + 1
-        transact
+      if cooperate-with-same? [      ;;added to make the interaction two-way
+        if [cooperate-with-same?] of myself [
+          set coopown coopown + 1
+          set coopown-agg coopown-agg + 1
+          transact
 
-
+        ]
       ]
     ]
     ;; if we are different colors we take a different strategy
@@ -186,17 +199,17 @@ to interact  ;; turtle procedure
       set meetother meetother + 1
       set meetother-agg meetother-agg + 1
       ;; if we cooperate with different colors then reduce our PTR and increase our neighbors
-      ifelse [cooperate-with-different?] of myself [
-        set coopother coopother + 1
-        set coopother-agg coopother-agg + 1
-        transact
-
-
-      ]
-      [
-        set defother defother + 1
-        set defother-agg defother-agg + 1
-      ]
+      if cooperate-with-different? [      ;;added to make the interaction two-way
+        ifelse [cooperate-with-different?] of myself [
+          set coopother coopother + 1
+          set coopother-agg coopother-agg + 1
+          transact
+        ]
+        [
+          set defother defother + 1
+          set defother-agg defother-agg + 1
+        ]
+      ]   
     ]
   ]
 end
@@ -383,6 +396,19 @@ end
 to-report last100coop-percent
   report sum last100coop / max list 1 sum last100meet
 end
+to-report northneighborcolor
+  report northneighborcolor
+end
+to-report eastneighborcolor
+  report northneighborcolor
+end
+to-report southneighborcolor
+  report northneighborcolor
+end
+to-report westneighborcolor
+  report northneighborcolor
+end
+
 
 
 ; Copyright 2003 Uri Wilensky.
