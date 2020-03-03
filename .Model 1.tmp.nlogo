@@ -1,6 +1,6 @@
 extensions [array]
 ;; agents have a probablity to reproduce and a strategy
-turtles-own [ ptr cooperate-with-same? cooperate-with-different? raw-wealth scaled-wealth tag]
+turtles-own [ ptr cooperate-with-same? cooperate-with-different? raw-wealth scaled-wealth]
 
 globals [
   ;; the remaining variables support the replication of published experiments
@@ -87,19 +87,22 @@ end
 ;; creates a new agent in the world
 to create-turtle  ;; patch procedure
   sprout 1 [
-    set wealth random-normal 50 25
-    if wealth > 75 [ set color white]
-    if wealth <= 75 and wealth > 50 [ set color green ]
-    if wealth <= 50 and wealth > 25 [ set color yellow ]
-    if wealth <= 25 [ set color red ]
-    set tag wealth
+    set raw-wealth random-normal 50 25
+    if raw-wealth > 75 [ set color white]
+    if raw-wealth <= 75 and raw-wealth > 50 [ set color green ]
+    if raw-wealth <= 50 and raw-wealth > 25 [ set color yellow ]
+    if raw-wealth <= 25 [ set color red ]
+    set scaled-wealth raw-wealth
     ;; determine the strategy for interacting with someone of the same color
     set cooperate-with-same? (random-float 1.0 < immigrant-chance-cooperate-with-same)
     ;; determine the strategy for interacting with someone of a different color
     set cooperate-with-different? (random-float 1.0 < immigrant-chance-cooperate-with-different)
     ;; change the shape of the agent on the basis of the strategy
+    
     update-shape
+    
   ]
+
 end
 
 to-report random-color
@@ -148,10 +151,10 @@ to transact
   ;; give a dollar to another turtle
   ;;set wealth wealth + 1
   ;;ask one-of other turtles [ set wealth wealth + 1 ]
-  set me wealth
-  ask one-of other turtles [set you wealth]
-  set wealth wealth  + you * .15
-  ask one-of other turtles [set wealth wealth + me * .15]
+  set me raw-wealth
+  ask one-of other turtles [set you raw-wealth]
+  set raw-wealth raw-wealth  + you * .15
+  ask one-of other turtles [set raw-wealth raw-wealth + me * .15]
 end
 
 to interact  ;; turtle procedure
@@ -287,16 +290,16 @@ end
          ;; [set color red] ] ] ] ]
 
 to recolor-turtles                      ;; think this function needs work
-  set turtles-list sort-on[wealth]turtles
-  set percentile75 [wealth] of item 1 turtles-list      ;; these indices seem off as well as teh fact of how do you know size?
-  set percentile50 [wealth] of item 1300 turtles-list
-  set percentile25 [wealth] of item 650 turtles-list
+  set turtles-list sort-on[raw-wealth]turtles
+  set percentile75 [raw-wealth] of item 1 turtles-list      ;; these indices seem off as well as teh fact of how do you know size?
+  set percentile50 [raw-wealth] of item 1300 turtles-list
+  set percentile25 [raw-wealth] of item 650 turtles-list
   ask turtles
-  [ifelse (wealth >= percentile75)
+  [ifelse (raw-wealth >= percentile75)
     [set color white]
-    [ifelse (wealth < percentile75 and wealth >= percentile50)
+    [ifelse (raw-wealth < percentile75 and raw-wealth >= percentile50)
       [set color green]
-      [ifelse (wealth < percentile50 and wealth >= percentile25)
+      [ifelse (raw-wealth < percentile50 and raw-wealth >= percentile25)
         [set color yellow]
         [set color red] ] ] ]
 
@@ -304,12 +307,12 @@ end
 
 
 to scale100  ;; scaling everything to base 100
-  set turtles-list sort-on[wealth] turtles   
-  set counter 0
-  set scale  [wealth] of item 0 turtles-list / 100
+  set turtles-list sort-on[raw-wealth] turtles   
+  let counter 0
+  let scale  [raw-wealth] of item 0 turtles-list / 100
   while [counter < length turtles-list]
   [
-    ;;set [wealth] of item counter mylist  [wealth] of item counter mylist * scale 
+    ;;set [scaled-wealth] of item counter mylist  [wealth] of item counter mylist * scale 
     ;; change list to array to make mutable
     set counter counter + 1
   ]
@@ -407,7 +410,6 @@ end
 to-report last100coop-percent
   report sum last100coop / max list 1 sum last100meet
 end
-
 
 ; Copyright 2003 Uri Wilensky.
 ; See Info tab for full copyright and license.
