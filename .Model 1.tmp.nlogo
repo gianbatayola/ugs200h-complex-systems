@@ -98,9 +98,9 @@ to create-turtle  ;; patch procedure
     ;; determine the strategy for interacting with someone of a different color
     set cooperate-with-different? (random-float 1.0 < immigrant-chance-cooperate-with-different)
     ;; change the shape of the agent on the basis of the strategy
-    
+
     update-shape
-    
+
   ]
 
 end
@@ -307,16 +307,16 @@ end
 
 
 to scale100  ;; scaling everything to base 100
-  set turtles-list sort-on[raw-wealth] turtles   
+  set turtles-list sort-on[raw-wealth] turtles
   let counter 0
   let scale  [raw-wealth] of item 0 turtles-list / 100
   while [counter < length turtles-list]
   [
-    ;;set [scaled-wealth] of item counter mylist  [wealth] of item counter mylist * scale 
+    ;;set [scaled-wealth] of item counter mylist  [wealth] of item counter mylist * scale
     ;; change list to array to make mutable
     set counter counter + 1
   ]
-  
+
 end
 ;; this routine calculates a moving average of some stats over the last 100 ticks
 to update-stats
@@ -410,6 +410,7 @@ end
 to-report last100coop-percent
   report sum last100coop / max list 1 sum last100meet
 end
+
 
 ; Copyright 2003 Uri Wilensky.
 ; See Info tab for full copyright and license.
