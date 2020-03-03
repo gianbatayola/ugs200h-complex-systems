@@ -400,8 +400,8 @@ end
 GRAPHICS-WINDOW
 323
 10
-825
-513
+582
+270
 -1
 -1
 9.67
@@ -415,9 +415,9 @@ GRAPHICS-WINDOW
 1
 1
 0
-50
+25
 0
-50
+25
 0
 0
 1
@@ -625,7 +625,7 @@ exchange_rate
 exchange_rate
 0.01
 1
-0.1
+0.01
 0.01
 1
 NIL
