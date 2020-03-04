@@ -202,9 +202,9 @@ to transact
   ;;set wealth wealth + 1
   ;;ask one-of other turtles [ set wealth wealth + 1 ]
   set mine raw-wealth
-  ask one-of other turtles [set yours raw-wealth]
+  ask one-of turtles-on neighbors4 [set yours raw-wealth]
   set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
-  ask one-of other turtles [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
+  ask one-of turtles-on neighbors4 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
 end
 
 to interact  ;; turtle procedure
@@ -538,7 +538,7 @@ cost-of-giving
 cost-of-giving
 0.0
 1.0
-0.0
+0.8
 0.01
 1
 NIL
@@ -553,7 +553,7 @@ gain-of-receiving
 gain-of-receiving
 0.0
 1.0
-0.53
+0.47
 0.01
 1
 NIL
@@ -632,15 +632,15 @@ NIL
 1
 
 SLIDER
-5
-252
-318
-285
+0
+253
+313
+286
 chance-cooperate-with-same
 chance-cooperate-with-same
 0.0
 1.0
-0.45
+0.81
 0.01
 1
 NIL
@@ -655,7 +655,7 @@ chance-cooperate-with-different
 chance-cooperate-with-different
 0.0
 1.0
-0.45
+0.8
 0.01
 1
 NIL
@@ -670,7 +670,7 @@ exchange_rate
 exchange_rate
 0.01
 1
-1.0
+0.79
 0.01
 1
 NIL
