@@ -29,7 +29,7 @@ globals [
   last100coop           ;; how many interactions have been cooperation in the last 100 ticks
   mine                  ;; the wealth that an agent has
   yours                 ;; the wealth that another agent has while interacting
-  turtles-list          ;; a list of turtles
+  wealth-list          ;; a list of turtles
   percentile75          ;; the 75th percentile of wealth
   percentile50          ;; the 50th percentile of wealth
   percentile25          ;; the 25th percentile of wealth
@@ -37,6 +37,7 @@ globals [
   eastneighborcolor     ;; color of the neighbor in east
   southneighborcolor    ;; color of the neighbor in south
   westneighborcolor     ;; color of the neighbor in west
+  scale
 
 ]
 
@@ -81,10 +82,11 @@ to initialize-variables
   set last100coop []
   set mine 0
   set yours 0
-  set turtles-list []
+  set wealth-list []
   set percentile75 0
   set percentile50 0
   set percentile25 0
+  set scale 1
 end
 
 ;; creates a new agent in the world
@@ -120,10 +122,10 @@ to clear-stats
   set defother 0
   set meetother 0
   set coopother 0
-  set northneighborcolor 0
-  set eastneighborcolor 0
-  set southneighborcolor 0
-  set westneighborcolor 0
+  ;;set northneighborcolor 0
+  ;;set eastneighborcolor 0
+  ;;set southneighborcolor 0
+  ;;set westneighborcolor 0
 end
 
 ;; the main routine
@@ -139,9 +141,9 @@ to go
   ask turtles [ interact ]
   ask turtles [addwealth]
   set wealth-list sort-by > wealth-list
-  if length wealth-list > 0 [set scale first wealth-list / 100]
+  if length wealth-list > 0 [set scale first wealth-list]
   ask turtles[toscale]
-  get-percentiles
+  ;get-percentiles
   ;;ask turtles [colorandscale]
   ;; transact and then update your location
   ;;ask turtles with [ wealth > 0 ] [ transact ]
@@ -149,27 +151,28 @@ to go
   ;;ask turtles [ reproduce ]
   ;;death           ;; kill some of the agents
   update-stats    ;; update the states for the aggregate and last 100 ticks
-  ask turtles [recolor]
+  ;;ask turtles [recolor]
+  recolor-turtles
   tick
 end
 
-to get-percentiles
-  set percentile50 median wealth-list
-  let ending length wealth-list
-  let middle ending * .5
-  let lower sublist wealth-list middle ending
-  let upper sublist wealth-list 0 middle
-  set percentile75 median upper
-  set percentile25 median lower
+;to get-percentiles
+ ; set percentile50 median wealth-list
+  ;let ending length wealth-list
+  ;let middle ending * .5
+  ;let lower sublist wealth-list middle ending
+  ;let upper sublist wealth-list 0 middle
+  ;set percentile75 median upper
+  ;set percentile25 median lower
 
-end
+;end
 
 to addwealth
   set wealth-list fput raw-wealth wealth-list
 end
 
 to toscale
-  set scaled-wealth scale * scaled-wealth
+  set scaled-wealth raw-wealth / scale * 100
 end
 ;; random individuals enter the world on empty cells
 ;;to immigrate
@@ -200,17 +203,17 @@ to transact
   ;;ask one-of other turtles [ set wealth wealth + 1 ]
   set mine raw-wealth
   ask one-of other turtles [set yours raw-wealth]
-  set raw-wealth raw-wealth  + yours * .15 - raw wealth * cost-of-giving
-  ask one-of other turtles [set raw-wealth raw-wealth + mine * .15 raw wealth * cost-of-giving]
+  set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
+  ask one-of other turtles [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
 end
 
 to interact  ;; turtle procedure
 
   ;; Capture the color of neighbors
-  set northneighborcolor (color of [turtles-at 0 1])
-  set eastneighborcolor (color of [turtles-at 1 0])
-  set southneighborcolor (color of [turtles-at 0 -1])
-  set westneighborcolor (color of [turtles-at -1 0])
+ ; set northneighborcolor (color of [turtles-at 0 1])
+  ;set eastneighborcolor (color of [turtles-at 1 0])
+  ;set southneighborcolor (color of [turtles-at 0 -1])
+  ;set westneighborcolor (color of [turtles-at -1 0])
   ;; interact with Von Neumann neighborhood
   ask turtles-on neighbors4 [
     ;; the commands inside the ASK are written from the point of view
@@ -249,7 +252,7 @@ to interact  ;; turtle procedure
           set defother defother + 1
           set defother-agg defother-agg + 1
         ]
-      ]   
+      ]
     ]
   ]
 end
@@ -316,10 +319,10 @@ end
 
 
 to recolor-turtles                      ;; think this function needs work
-  set turtles-list sort-on[raw-wealth]turtles
-  set percentile75 [raw-wealth] of item (0.75 * length(turtles-list)) turtles-list      ;; fixed hardcode
-  set percentile50 [raw-wealth] of item (0.50 * length(turtles-list)) turtles-list
-  set percentile25 [raw-wealth] of item (0.25 * length(turtles-list)) turtles-list
+  set wealth-list sort-on[raw-wealth]turtles
+  set percentile75 [raw-wealth] of item (0.75 * length(wealth-list)) wealth-list      ;; fixed hardcode
+  set percentile50 [raw-wealth] of item (0.50 * length(wealth-list)) wealth-list
+  set percentile25 [raw-wealth] of item (0.25 * length(wealth-list)) wealth-list
   ask turtles
   [ifelse (raw-wealth >= percentile75)
     [set color white]
@@ -332,18 +335,18 @@ to recolor-turtles                      ;; think this function needs work
 end
 
 
-to scale100  ;; scaling everything to base 100
-  set turtles-list sort-on[raw-wealth] turtles
-  let counter 0
-  let scale  [raw-wealth] of item 0 turtles-list / 100
-  while [counter < length turtles-list]
-  [
+;to scale100  ;; scaling everything to base 100
+ ; set wealth-list sort-on[raw-wealth] turtles
+ ; let counter 0
+ ; let scale  [raw-wealth] of item 0 turtles-list / 100
+ ; while [counter < length turtles-list]
+  ;[
     ;;set [scaled-wealth] of item counter mylist  [wealth] of item counter mylist * scale
     ;; change list to array to make mutable
-    set counter counter + 1
-  ]
+   ; set counter counter + 1
+  ;]
 
-end
+;end
 ;; this routine calculates a moving average of some stats over the last 100 ticks
 to update-stats
   ;;set last100dd        shorten lput (count turtles with [shape = "square 2"]) last100dd
@@ -436,17 +439,17 @@ end
 to-report last100coop-percent
   report sum last100coop / max list 1 sum last100meet
 end
-to-report northneighborcolor
+to-report northneighborcolor1
   report northneighborcolor
 end
-to-report eastneighborcolor
-  report northneighborcolor
+to-report eastneighborcolor1
+  report eastneighborcolor
 end
-to-report southneighborcolor
-  report northneighborcolor
+to-report southneighborcolor1
+  report southneighborcolor
 end
-to-report westneighborcolor
-  report northneighborcolor
+to-report westneighborcolor1
+  report westneighborcolor
 end
 
 
@@ -457,8 +460,8 @@ end
 GRAPHICS-WINDOW
 323
 10
-581
-269
+582
+270
 -1
 -1
 9.67
@@ -535,7 +538,7 @@ cost-of-giving
 cost-of-giving
 0.0
 1.0
-0.01
+0.0
 0.01
 1
 NIL
@@ -550,7 +553,7 @@ gain-of-receiving
 gain-of-receiving
 0.0
 1.0
-0.03
+0.53
 0.01
 1
 NIL
@@ -606,8 +609,8 @@ true
 true
 "" ""
 PENS
-"CC" 1.0 0 -10899396 true "" "plotxy ticks count turtles with [shape = \"circle\"]"
-"CD" 1.0 0 -2674135 true "" "plotxy ticks count turtles with [shape = \"circle 2\"]"
+"Top 25" 1.0 0 -10899396 true "" "plotxy ticks count turtles with [shape = \"circle\"]"
+"" 1.0 0 -2674135 true "" "plotxy ticks count turtles with [shape = \"circle 2\"]"
 "DC" 1.0 0 -4079321 true "" "plotxy ticks count turtles with [shape = \"square\"]"
 "DD" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"square 2\"]"
 
@@ -659,15 +662,15 @@ NIL
 HORIZONTAL
 
 SLIDER
-30
-91
-202
-124
+77
+103
+249
+136
 exchange_rate
 exchange_rate
 0.01
 1
-0.01
+1.0
 0.01
 1
 NIL
@@ -1506,6 +1509,37 @@ setup-full repeat 150 [ go ]
     </enumeratedValueSet>
     <enumeratedValueSet variable="max-pycor">
       <value value="50"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <timeLimit steps="5"/>
+    <exitCondition>ticks = 100</exitCondition>
+    <metric>count raw-wealth</metric>
+    <enumeratedValueSet variable="immigrants-per-day">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="gain-of-receiving">
+      <value value="0.53"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.75"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.45"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0.005"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.45"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0.1"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
