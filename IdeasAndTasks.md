@@ -17,11 +17,11 @@ Meeting 02/23 (Ben, Gian, Hanshi, Ashok)
 - [ ] Remove unnecessary code
 
 Meeting 02/28 (Ben, Gian, Ashok, Prof.Nair)
-- [ ] Identify the interaction mechanism (understand the Von Neumann interaction order) (Ben)
-- [ ] Bring back the score to base 100 after every tick (normalizing) (HanshiZ)
+- [x] Identify the interaction mechanism (understand the Von Neumann interaction order) (Ben)
+- [x] Bring back the score to base 100 after every tick (normalizing) (HanshiZ)
 - [ ] Probability of co-operating behavior will not be random (Red may not be willing to interact with red as much as blue would like to interact with blue). Rethink the co-operating behavior generation at spawn (Gian)
-- [ ] Recode the colors to White, Green, Yellow and Red (Hanshi)
-- [ ] Split exchange rate as two values (Cost of giving and Gain of receiving). Make them slider variables (Ben)
+- [x] Recode the colors to White, Green, Yellow and Red (Hanshi)
+- [x] Split exchange rate as two values (Cost of giving and Gain of receiving). Make them slider variables (Ben)
 - [ ] Capturing the color and wealth of neighbors of each turtle (Add accounting variables for color and wealth of each neighbor) (Ashok)
 - [ ] Plan the variables to be collected in Behavior Space (current wealth, new wealth, current color, new color, exchange rate, mutuation rate). What are the x and y variables?
 - [ ] Tracking grid level and turtle level wealth change in every tick (Gian)
