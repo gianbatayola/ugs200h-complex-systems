@@ -164,7 +164,7 @@ to go
   recolor-turtles
 
   tick
-  if ticks mod frequency-grades-updated = 0 [
+  if ticks mod check-grades-every = 0 [
   ask turtles [
     mutate
   ]
@@ -744,8 +744,8 @@ SLIDER
 89
 245
 122
-frequency-grades-updated
-frequency-grades-updated
+check-grades-every
+check-grades-every
 1
 100
 20.0
