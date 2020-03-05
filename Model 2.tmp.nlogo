@@ -523,7 +523,7 @@ mutation-rate
 mutation-rate
 0.0
 1.0
-0.55
+0.079
 0.0010
 1
 NIL
@@ -609,10 +609,10 @@ true
 true
 "" ""
 PENS
-"0%-25%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = white] "
-"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = green]"
-"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = yellow]"
-"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = red]"
+"100%-75%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = white] "
+"75%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = green]"
+"50%-25%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = yellow]"
+"25%-0%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = red]"
 
 BUTTON
 130
@@ -677,10 +677,10 @@ NIL
 HORIZONTAL
 
 PLOT
-893
-232
-1204
-436
+891
+231
+1178
+435
 Circle 2 vs. Rank
 time
 count
@@ -692,16 +692,16 @@ false
 true
 "" ""
 PENS
-"0%-25%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = white] "
-"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = green] "
-"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = yellow] "
-"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = red] "
+"100%-75%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = white] "
+"75%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = green] "
+"50%-25%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = yellow] "
+"25%-0%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = red] "
 
 PLOT
-893
-28
-1177
-233
+891
+27
+1178
+232
 Square 2 vs. Rank
 time
 count
@@ -713,10 +713,10 @@ false
 true
 "" ""
 PENS
-"0%-25%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = white] "
-"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = green] "
-"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = yellow] "
-"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = red] "
+"100%-75%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = white] "
+"75%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = green] "
+"50%-25%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = yellow] "
+"25%-0%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = red] "
 
 PLOT
 592
@@ -734,10 +734,10 @@ false
 true
 "" ""
 PENS
-"0%-25%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"square\" and color = white]"
-"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"square\" and color = green] "
-"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"square\" and color = yellow] "
-"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"square\" and color = red] "
+"100%-75%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"square\" and color = white]"
+"75%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"square\" and color = green] "
+"50%-25%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"square\" and color = yellow] "
+"25%-0%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"square\" and color = red] "
 
 SLIDER
 16
@@ -748,7 +748,7 @@ frequency-grades-updated
 frequency-grades-updated
 1
 100
-50.0
+20.0
 1
 1
 days
@@ -758,8 +758,8 @@ TEXTBOX
 359
 281
 581
-351
-Circles cooperate with same color\nSquares defect with same color\nFilled-in shapes cooperate with different color\nEmpty shapes defect with different color
+407
+Circles cooperate with same color\nSquares defect with same color\nFilled-in shapes cooperate with different color\nEmpty shapes defect with different color\n\nWhite is the 100th-75th percentile\nGreen is the 75th-50th percentile\nYellow is the 50th-25th percentile\nRed is the 25th-0th percentile
 11
 0.0
 0
