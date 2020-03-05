@@ -201,12 +201,12 @@ end
   ;;ask n-of how-many empty-patches [ create-turtle ]
 ;;end
 
-to recolor
-  if raw-wealth > percentile75 [set color white]
-  if raw-wealth <= percentile75 and raw-wealth > percentile50 [set color green]
-  if raw-wealth <= percentile50 and raw-wealth > percentile25 [set color yellow]
-  if raw-wealth <= percentile25 [set color red]
-end
+;to recolor
+ ; if raw-wealth > percentile75 [set color white]
+  ;if raw-wealth <= percentile75 and raw-wealth > percentile50 [set color green]
+  ;if raw-wealth <= percentile50 and raw-wealth > percentile25 [set color yellow]
+  ;if raw-wealth <= percentile25 [set color red]
+;end
 
 ;; random individuals enter the world on empty cells
 ;;to immigrate
@@ -523,7 +523,7 @@ mutation-rate
 mutation-rate
 0.0
 1.0
-0.762
+0.55
 0.0010
 1
 NIL
@@ -655,7 +655,7 @@ chance-cooperate-with-different
 chance-cooperate-with-different
 0.0
 1.0
-0.69
+0.0
 0.01
 1
 NIL
