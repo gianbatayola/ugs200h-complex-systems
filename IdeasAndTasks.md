@@ -6,6 +6,11 @@
 
 - Shuffling position
 
+- Creating a timeout period for some agents when they cannot interact(ie disease, travel attitude etc.)
+
+- Perhaps consider a probabilistic way of deciding interactions (ie as of now agents are binary in whether they cooperate with others
+ of same or other color that is set at beginning)
+
 - Running multiple cells as different "teams"
 
 ## To Do List:
