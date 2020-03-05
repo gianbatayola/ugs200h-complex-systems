@@ -523,7 +523,7 @@ mutation-rate
 mutation-rate
 0.0
 1.0
-0.079
+0.589
 0.0010
 1
 NIL
@@ -604,7 +604,7 @@ count
 0.0
 100.0
 0.0
-100.0
+300.0
 true
 true
 "" ""
@@ -640,7 +640,7 @@ chance-cooperate-with-same
 chance-cooperate-with-same
 0.0
 1.0
-0.49
+1.0
 0.01
 1
 NIL
@@ -655,7 +655,7 @@ chance-cooperate-with-different
 chance-cooperate-with-different
 0.0
 1.0
-0.44
+0.0
 0.01
 1
 NIL
@@ -687,8 +687,8 @@ count
 0.0
 100.0
 0.0
-100.0
-false
+300.0
+true
 true
 "" ""
 PENS
@@ -708,8 +708,8 @@ count
 0.0
 100.0
 0.0
-100.0
-false
+300.0
+true
 true
 "" ""
 PENS
@@ -729,7 +729,7 @@ count
 0.0
 100.0
 0.0
-100.0
+300.0
 false
 true
 "" ""
