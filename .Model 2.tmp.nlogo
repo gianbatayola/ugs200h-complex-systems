@@ -99,6 +99,7 @@ to create-turtle  ;; patch procedure
     if raw-wealth <= 50 and raw-wealth > 25 [ set color yellow ]
     if raw-wealth <= 25 [ set color red ]
     set scaled-wealth raw-wealth
+    set original raw-wealth
     ;; determine the strategy for interacting with someone of the same color
     set cooperate-with-same? (random-float 1.0 < chance-cooperate-with-same)
     ;; determine the strategy for interacting with someone of a different color
@@ -133,7 +134,7 @@ end
 to go
   clear-stats     ;; clear the turn based stats
   ;;immigrate       ;; new agents immigrate into the world
-
+  ask turtles [resetraw]
   ;; reset the probability to reproduce
   ;;ask turtles [ set ptr initial-ptr ]
   set wealth-list []
@@ -158,6 +159,9 @@ to go
   tick
 end
 
+to resetraw
+ set raw-wealth scaled-wealth
+end
 ;to get-percentiles
  ; set percentile50 median wealth-list
   ;let ending length wealth-list
@@ -320,7 +324,7 @@ to update-shape
 end
 
 
-to recolor-turtles                      ;; think this function needs work
+to recolor-turtles                    
   set wealth-list sort-on[raw-wealth]turtles
   set percentile75 [raw-wealth] of item (0.75 * length(wealth-list)) wealth-list      ;; fixed hardcode
   set percentile50 [raw-wealth] of item (0.50 * length(wealth-list)) wealth-list
