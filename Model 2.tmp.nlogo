@@ -229,12 +229,12 @@ end
 to interact  ;; turtle procedure
 
   ;; Capture the color of neighbors
-  set northneighborcolor ([color] of turtles-at 0 1)
-  set eastneighborcolor ([color] of turtles-at 1 0)
-  set southneighborcolor ([color] of turtles-at 0 -1)
-  set westneighborcolor ([color] of turtles-at -1 0)
-  ;; interact with neighbor in north
-  ask turtles-at 0 1 [
+ ; set northneighborcolor (color of [turtles-at 0 1])
+  ;set eastneighborcolor (color of [turtles-at 1 0])
+  ;set southneighborcolor (color of [turtles-at 0 -1])
+  ;set westneighborcolor (color of [turtles-at -1 0])
+  ;; interact with Von Neumann neighborhood
+  ask turtles-on neighbors4 [
     ;; the commands inside the ASK are written from the point of view
     ;; of the agent being interacted with.  To refer back to the agent
     ;; that initiated the interaction, we use the MYSELF primitive.
@@ -250,10 +250,7 @@ to interact  ;; turtle procedure
         if [cooperate-with-same?] of myself [
           set coopown coopown + 1
           set coopown-agg coopown-agg + 1
-          set mine raw-wealth
-          ask one-of turtles-at 0 1 [set yours raw-wealth] ;asking the turtle in north
-          set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
-          ask one-of turtles-on neighbors4 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
+          transact
 
         ]
       ]
@@ -268,155 +265,11 @@ to interact  ;; turtle procedure
         ifelse [cooperate-with-different?] of myself [
           set coopother coopother + 1
           set coopother-agg coopother-agg + 1
-          set mine raw-wealth
-          ask one-of turtles-at 0 1 [set yours raw-wealth] ;asking the turtle in north
-          set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
-          ask one-of turtles-on neighbors4 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
+          transact
         ]
         [
-          ;set defother defother + 1
-          ;set defother-agg defother-agg + 1
-          ;; interact with neighbor in east
-          ask turtles-at 1 0 [
-            ;; the commands inside the ASK are written from the point of view
-            ;; of the agent being interacted with.  To refer back to the agent
-            ;; that initiated the interaction, we use the MYSELF primitive.
-            set meet meet + 1
-            set meet-agg meet-agg + 1
-            ;; do one thing if the individual interacting is the same color as me
-            if color = [color] of myself [
-              ;; record the fact the agent met someone of the own color
-              set meetown meetown + 1
-              set meetown-agg meetown-agg + 1
-              ;; if I cooperate then I reduce my PTR and increase my neighbors
-              if cooperate-with-same? [      ;;added to make the interaction two-way
-                if [cooperate-with-same?] of myself [
-                  set coopown coopown + 1
-                  set coopown-agg coopown-agg + 1
-                  set mine raw-wealth
-                  ask one-of turtles-at 1 0 [set yours raw-wealth] ;asking the turtle in east
-                  set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
-                  ask one-of turtles-on neighbors4 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
-
-                ]
-              ]
-            ]
-            ;; if we are different colors we take a different strategy
-            if color != [color] of myself [
-              ;; record stats on encounters
-              set meetother meetother + 1
-              set meetother-agg meetother-agg + 1
-              ;; if we cooperate with different colors then reduce our PTR and increase our neighbors
-              if cooperate-with-different? [      ;;added to make the interaction two-way
-                ifelse [cooperate-with-different?] of myself [
-                  set coopother coopother + 1
-                  set coopother-agg coopother-agg + 1
-                  set mine raw-wealth
-                  ask one-of turtles-at 1 0 [set yours raw-wealth] ;asking the turtle in east
-                  set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
-                  ask one-of turtles-on neighbors4 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
-                ]
-                [
-                  ;set defother defother + 1
-                  ;set defother-agg defother-agg + 1
-                  ;; interact with neighbor in south
-                  ask turtles-at 0 -1 [
-                    ;; the commands inside the ASK are written from the point of view
-                    ;; of the agent being interacted with.  To refer back to the agent
-                    ;; that initiated the interaction, we use the MYSELF primitive.
-                    set meet meet + 1
-                    set meet-agg meet-agg + 1
-                    ;; do one thing if the individual interacting is the same color as me
-                    if color = [color] of myself [
-                      ;; record the fact the agent met someone of the own color
-                      set meetown meetown + 1
-                      set meetown-agg meetown-agg + 1
-                      ;; if I cooperate then I reduce my PTR and increase my neighbors
-                      if cooperate-with-same? [      ;;added to make the interaction two-way
-                        if [cooperate-with-same?] of myself [
-                          set coopown coopown + 1
-                          set coopown-agg coopown-agg + 1
-                          set mine raw-wealth
-                          ask one-of turtles-at 0 -1 [set yours raw-wealth] ;asking the turtle in south
-                          set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
-                          ask one-of turtles-on neighbors4 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
-
-                        ]
-                      ]
-                    ]
-                    ;; if we are different colors we take a different strategy
-                    if color != [color] of myself [
-                      ;; record stats on encounters
-                      set meetother meetother + 1
-                      set meetother-agg meetother-agg + 1
-                      ;; if we cooperate with different colors then reduce our PTR and increase our neighbors
-                      if cooperate-with-different? [      ;;added to make the interaction two-way
-                        ifelse [cooperate-with-different?] of myself [
-                          set coopother coopother + 1
-                          set coopother-agg coopother-agg + 1
-                          set mine raw-wealth
-                          ask one-of turtles-at 0 -1 [set yours raw-wealth] ;asking the turtle in south
-                          set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
-                          ask one-of turtles-on neighbors4 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
-                        ]
-                        [
-                          ;set defother defother + 1
-                          ;set defother-agg defother-agg + 1
-                          ;; interact with neighbor in west
-                          ask turtles-at -1 0 [
-                            ;; the commands inside the ASK are written from the point of view
-                            ;; of the agent being interacted with.  To refer back to the agent
-                            ;; that initiated the interaction, we use the MYSELF primitive.
-                            set meet meet + 1
-                            set meet-agg meet-agg + 1
-                            ;; do one thing if the individual interacting is the same color as me
-                            if color = [color] of myself [
-                              ;; record the fact the agent met someone of the own color
-                              set meetown meetown + 1
-                              set meetown-agg meetown-agg + 1
-                              ;; if I cooperate then I reduce my PTR and increase my neighbors
-                              if cooperate-with-same? [      ;;added to make the interaction two-way
-                                if [cooperate-with-same?] of myself [
-                                  set coopown coopown + 1
-                                  set coopown-agg coopown-agg + 1
-                                  set mine raw-wealth
-                                  ask one-of turtles-at -1 0 [set yours raw-wealth] ;asking the turtle in west
-                                  set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
-                                  ask one-of turtles-on neighbors4 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
-
-                                ]
-                              ]
-                            ]
-                            ;; if we are different colors we take a different strategy
-                            if color != [color] of myself [
-                              ;; record stats on encounters
-                              set meetother meetother + 1
-                              set meetother-agg meetother-agg + 1
-                              ;; if we cooperate with different colors then reduce our PTR and increase our neighbors
-                              if cooperate-with-different? [      ;;added to make the interaction two-way
-                                ifelse [cooperate-with-different?] of myself [
-                                  set coopother coopother + 1
-                                  set coopother-agg coopother-agg + 1
-                                  set mine raw-wealth
-                                  ask one-of turtles-at -1 0 [set yours raw-wealth] ;asking the turtle in west
-                                  set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
-                                  ask one-of turtles-on neighbors4 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
-                                ]
-                                [
-                                  ;set defother defother + 1
-                                  ;set defother-agg defother-agg + 1
-                                ]
-                              ]
-                            ]
-                          ]
-                        ]
-                      ]
-                    ]
-                  ]
-                ]
-              ]
-            ]
-          ]
+          set defother defother + 1
+          set defother-agg defother-agg + 1
         ]
       ]
     ]
