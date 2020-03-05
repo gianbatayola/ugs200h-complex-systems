@@ -13,7 +13,7 @@ Meeting 02/23 (Ben, Gian, Hanshi, Ashok)
 - [x] Fix wealth transaction
 - [x] Fix color assignmnent
 - [ ] Find data to analyze
-- [ ] Mutating personality
+- [x] Mutating personality
 - [ ] Remove unnecessary code
 
 Meeting 02/28 (Ben, Gian, Ashok, Prof.Nair)
@@ -25,7 +25,7 @@ Meeting 02/28 (Ben, Gian, Ashok, Prof.Nair)
 - [ ] Capturing the color and wealth of neighbors of each turtle (Add accounting variables for color and wealth of each neighbor) (Ashok)
 - [ ] Plan the variables to be collected in Behavior Space (current wealth, new wealth, current color, new color, exchange rate, mutuation rate). What are the x and y variables?
 - [ ] Tracking grid level and turtle level wealth change in every tick (Gian)
-- [ ] (Future) Add mutation rate as a variable
+- [x] (Future) Add mutation rate as a variable
 - [ ] (Future) Add personality change options based on triggers (e.g. 5 continous ticks as red will force a non-cooperating person to co-operate with others)
 - [ ] (Future) Segregating the interactions to limit to teams
 
