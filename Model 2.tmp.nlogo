@@ -754,6 +754,16 @@ frequency-grades-updated
 days
 HORIZONTAL
 
+TEXTBOX
+359
+281
+581
+351
+Circles cooperate with same color\nSquares defect with same color\nFilled-in shapes cooperate with different color\nEmpty shapes defect with different color
+11
+0.0
+0
+
 @#$#@#$#@
 ## WHAT IS IT?
 
