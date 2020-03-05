@@ -604,15 +604,15 @@ count
 0.0
 100.0
 0.0
-210.0
+100.0
 true
 true
 "" ""
 PENS
-"0%-25%" 1.0 0 -1 true "" "plotxy ticks count turtles with [shape = \"circle\"] and [color = white] "
-"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"circle\"] and [color = green]"
-"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"circle\"] and [color = yellow]"
-"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"circle\"] and [color = red]"
+"0%-25%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = white] "
+"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = green]"
+"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = yellow]"
+"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"circle\" and color = red]"
 
 BUTTON
 130
@@ -640,7 +640,7 @@ chance-cooperate-with-same
 chance-cooperate-with-same
 0.0
 1.0
-1.0
+0.49
 0.01
 1
 NIL
@@ -655,7 +655,7 @@ chance-cooperate-with-different
 chance-cooperate-with-different
 0.0
 1.0
-0.0
+0.44
 0.01
 1
 NIL
@@ -687,15 +687,15 @@ count
 0.0
 100.0
 0.0
-210.0
-true
+100.0
+false
 true
 "" ""
 PENS
-"0%-25%" 1.0 0 -1 true "" "plotxy ticks count turtles with [shape = \"circle 2\"] and [color = white] "
-"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"circle 2\"] and [color = green] "
-"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"circle 2\"] and [color = yellow] "
-"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"circle 2\"] and [color = red] "
+"0%-25%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = white] "
+"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = green] "
+"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = yellow] "
+"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"circle 2\" and color = red] "
 
 PLOT
 893
@@ -703,20 +703,20 @@ PLOT
 1177
 233
 Square 2 vs. Rank
-NIL
-NIL
+time
+count
 0.0
 100.0
 0.0
-210.0
-true
+100.0
+false
 true
 "" ""
 PENS
-"0%-25%" 1.0 0 -1 true "" "plotxy ticks count turtles with [shape = \"square 2\"] and [color = white] "
-"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"square 2\"] and [color = green] "
-"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"square 2\"] and [color = yellow] "
-"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"square 2\"] and [color = red] "
+"0%-25%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = white] "
+"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = green] "
+"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = yellow] "
+"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"square 2\" and color = red] "
 
 PLOT
 592
@@ -724,20 +724,20 @@ PLOT
 893
 232
 Square vs. Rank
-NIL
-NIL
+time
+count
 0.0
 100.0
 0.0
-210.0
-true
+100.0
+false
 true
 "" ""
 PENS
-"0%-25%" 1.0 0 -1 true "" "plotxy ticks count turtles with [shape = \"square\"] and [color = white]"
-"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"square\"] and [color = green] "
-"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"square\"] and [color = yellow] "
-"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"square\"] and [color = red] "
+"0%-25%" 1.0 0 -16777216 true "" "plotxy ticks count turtles with [shape = \"square\" and color = white]"
+"25%-50%" 1.0 0 -8732573 true "" "plotxy ticks count turtles with [shape = \"square\" and color = green] "
+"50%-75%" 1.0 0 -987046 true "" "plotxy ticks count turtles with [shape = \"square\" and color = yellow] "
+"75%-100%" 1.0 0 -2139308 true "" "plotxy ticks count turtles with [shape = \"square\" and color = red] "
 
 SLIDER
 16
