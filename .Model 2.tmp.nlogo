@@ -154,7 +154,7 @@ to go
   update-stats    ;; update the states for the aggregate and last 100 ticks
   ;;ask turtles [recolor]
   recolor-turtles
-  ;death
+
   tick
 end
 
@@ -299,8 +299,8 @@ end
 ;to death
   ;; check to see if a random variable is less than the death rate for each agent
   ;ask turtles [
-   ; if random-float 1.0 < death-rate [ die ]
- ;; ]
+    ;if random-float 1.0 < death-rate [ die ]
+  ;]
 ;end
 
 ;; make sure the shape matches the strategy
@@ -510,7 +510,7 @@ death-rate
 death-rate
 0.0
 1.0
-0.05
+0.2
 0.05
 1
 NIL
