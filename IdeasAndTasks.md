@@ -36,6 +36,12 @@ Meeting 02/28 (Ben, Gian, Ashok, Prof.Nair)
 
 Meeting 03/01 (Ben, Gian, Hanshi, Ashok)
 - [ ] The transaction is currently based on one-way interaction. Make it a two-way interaction (Ashok)
-
-
 - [ ] Policy variables - Capability of the teacher to shuffle students, Control over limiting interactions, Changing group sizes.
+
+Meeting 03/05 (Ben, Gian, Hanshi, Ashok)
+- [ ] Dropout rate (Ben)
+- [ ] Leave of absence (Hanshi)
+- [ ] Randomizing the interaction pattern (Hanshi)
+- [ ] Cleaning the code (Gian)
+- [ ] Behavior Space (Ashok)
+- [ ] Study the link function to find its capabilities (Gian)
