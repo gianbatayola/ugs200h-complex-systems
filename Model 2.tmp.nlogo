@@ -6,6 +6,7 @@ turtles-own [
   raw-wealth
   scaled-wealth
   original
+  interactable
 ]
 
 globals [
@@ -140,6 +141,7 @@ end
 ;; the main routine
 to go
   clear-stats     ;; clear the turn based stats
+  ask turtles [update-state]
   ;;immigrate       ;; new agents immigrate into the world
   ask turtles [resetraw]
   ;; reset the probability to reproduce
@@ -170,6 +172,12 @@ to go
   ]
 ]
   if ticks = 100 [stop]
+end
+
+to update-state
+ if interactable > 0 [set interactable interactable - 1]
+ let leave floor random-exponential 0.3  ;; maybe future use slider
+ set interactable interactable + leave   
 end
 
 to resetraw
