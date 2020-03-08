@@ -622,7 +622,7 @@ PLOT
 230
 893
 436
-Circle vs. Rank
+Filled Circle vs. Rank
 time
 count
 0.0
@@ -705,7 +705,7 @@ PLOT
 231
 1178
 435
-Circle 2 vs. Rank
+Empty Circle 2 vs. Rank
 time
 count
 0.0
@@ -726,7 +726,7 @@ PLOT
 27
 1178
 232
-Square 2 vs. Rank
+Empty Square vs. Rank
 time
 count
 0.0
@@ -747,7 +747,7 @@ PLOT
 28
 893
 232
-Square vs. Rank
+Filled Square vs. Rank
 time
 count
 0.0
