@@ -3,9 +3,9 @@ extensions [array]
 turtles-own [
   cooperate-with-same? ;; probability agents will cooperate with the same color
   cooperate-with-different? ;; probability agents will cooperate with a different color
-  raw-wealth
-  scaled-wealth
-  original
+  raw-wealth ;; the raw wealth of an agent
+  scaled-wealth ;; the adjusted, scaled wealth of an agent
+  original ;; the original starting wealth of an agent
   interactable
 ]
 
@@ -132,67 +132,38 @@ to clear-stats
   set defother 0
   set meetother 0
   set coopother 0
-  ;;set northneighborcolor 0
-  ;;set eastneighborcolor 0
-  ;;set southneighborcolor 0
-  ;;set westneighborcolor 0
 end
 
 ;; the main routine
 to go
   clear-stats     ;; clear the turn based stats
   ask turtles [update-state]
-  ;;immigrate       ;; new agents immigrate into the world
   ask turtles [resetraw]
-  ;; reset the probability to reproduce
-  ;;ask turtles [ set ptr initial-ptr ]
   set wealth-list []
   ;; have all of the agents interact with other agents if they can
-
   ask turtles [ interact ]
   ask turtles [addwealth]
   set wealth-list sort-by > wealth-list
   if length wealth-list > 0 [set scale first wealth-list]
   ask turtles[toscale]
-  ;get-percentiles
-  ;;ask turtles [colorandscale]
-  ;; transact and then update your location
-  ;;ask turtles with [ wealth > 0 ] [ transact ]
-  ;; now they reproduce
-  ;;ask turtles [ reproduce ]
-  ;;death           ;; kill some of the agents
   update-stats    ;; update the states for the aggregate and last 100 ticks
-  ;;ask turtles [recolor]
   recolor-turtles
-
   tick
-  if ticks mod check-grades-every = 0 [
-  ask turtles [
-    mutate
-  ]
-]
+  if ticks mod change-strategy-every = 0
+  [ask turtles
+    [mutate]]
   if ticks = 100 [stop]
 end
 
 to update-state
  if interactable > 0 [set interactable interactable - 1]
  let leave floor random-exponential 0.3  ;; maybe future use slider
- set interactable interactable + leave   
+ set interactable interactable + leave
 end
 
 to resetraw
  set raw-wealth scaled-wealth
 end
-;to get-percentiles
- ; set percentile50 median wealth-list
-  ;let ending length wealth-list
-  ;let middle ending * .5
-  ;let lower sublist wealth-list middle ending
-  ;let upper sublist wealth-list 0 middle
-  ;set percentile75 median upper
-  ;set percentile25 median lower
-
-;end
 
 to addwealth
   set wealth-list fput raw-wealth wealth-list
@@ -201,33 +172,8 @@ end
 to toscale
   set scaled-wealth raw-wealth / scale * 100
 end
-;; random individuals enter the world on empty cells
-;;to immigrate
-  ;;let empty-patches patches with [not any? turtles-here]
-  ;; we can't have more immigrants than there are empty patches
-  ;;let how-many min list immigrants-per-day (count empty-patches)
-  ;;ask n-of how-many empty-patches [ create-turtle ]
-;;end
-
-;to recolor
- ; if raw-wealth > percentile75 [set color white]
-  ;if raw-wealth <= percentile75 and raw-wealth > percentile50 [set color green]
-  ;if raw-wealth <= percentile50 and raw-wealth > percentile25 [set color yellow]
-  ;if raw-wealth <= percentile25 [set color red]
-;end
-
-;; random individuals enter the world on empty cells
-;;to immigrate
-  ;;let empty-patches patches with [not any? turtles-here]
-  ;; we can't have more immigrants than there are empty patches
-  ;;let how-many min list immigrants-per-day (count empty-patches)
-  ;;ask n-of how-many empty-patches [ create-turtle ]
-;;end
 
 to transact
-  ;; give a dollar to another turtle
-  ;;set wealth wealth + 1
-  ;;ask one-of other turtles [ set wealth wealth + 1 ]
   set mine raw-wealth
   ask one-of turtles-on neighbors4 [set yours raw-wealth]
   set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
@@ -253,7 +199,6 @@ to interact  ;; turtle procedure
       ;; record the fact the agent met someone of the own color
       set meetown meetown + 1
       set meetown-agg meetown-agg + 1
-      ;; if I cooperate then I reduce my PTR and increase my neighbors
       if cooperate-with-same? [      ;;added to make the interaction two-way
         if [cooperate-with-same?] of myself [
           set coopown coopown + 1
@@ -271,7 +216,6 @@ to interact  ;; turtle procedure
       ;; record stats on encounters
       set meetother meetother + 1
       set meetother-agg meetother-agg + 1
-      ;; if we cooperate with different colors then reduce our PTR and increase our neighbors
       if cooperate-with-different? [      ;;added to make the interaction two-way
         ifelse [cooperate-with-different?] of myself [
           set coopother coopother + 1
@@ -282,8 +226,6 @@ to interact  ;; turtle procedure
           ask one-of turtles-at 0 1 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
         ]
         [
-          ;set defother defother + 1
-          ;set defother-agg defother-agg + 1
           ;; interact with neighbor in east
           ask turtles-at 1 0 [
             ;; the commands inside the ASK are written from the point of view
@@ -296,7 +238,6 @@ to interact  ;; turtle procedure
               ;; record the fact the agent met someone of the own color
               set meetown meetown + 1
               set meetown-agg meetown-agg + 1
-              ;; if I cooperate then I reduce my PTR and increase my neighbors
               if cooperate-with-same? [      ;;added to make the interaction two-way
                 if [cooperate-with-same?] of myself [
                   set coopown coopown + 1
@@ -314,7 +255,6 @@ to interact  ;; turtle procedure
               ;; record stats on encounters
               set meetother meetother + 1
               set meetother-agg meetother-agg + 1
-              ;; if we cooperate with different colors then reduce our PTR and increase our neighbors
               if cooperate-with-different? [      ;;added to make the interaction two-way
                 ifelse [cooperate-with-different?] of myself [
                   set coopother coopother + 1
@@ -325,8 +265,6 @@ to interact  ;; turtle procedure
                   ask one-of turtles-at 1 0 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
                 ]
                 [
-                  ;set defother defother + 1
-                  ;set defother-agg defother-agg + 1
                   ;; interact with neighbor in south
                   ask turtles-at 0 -1 [
                     ;; the commands inside the ASK are written from the point of view
@@ -339,7 +277,6 @@ to interact  ;; turtle procedure
                       ;; record the fact the agent met someone of the own color
                       set meetown meetown + 1
                       set meetown-agg meetown-agg + 1
-                      ;; if I cooperate then I reduce my PTR and increase my neighbors
                       if cooperate-with-same? [      ;;added to make the interaction two-way
                         if [cooperate-with-same?] of myself [
                           set coopown coopown + 1
@@ -368,8 +305,6 @@ to interact  ;; turtle procedure
                           ask one-of turtles-at 0 -1 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
                         ]
                         [
-                          ;set defother defother + 1
-                          ;set defother-agg defother-agg + 1
                           ;; interact with neighbor in west
                           ask turtles-at -1 0 [
                             ;; the commands inside the ASK are written from the point of view
@@ -382,7 +317,6 @@ to interact  ;; turtle procedure
                               ;; record the fact the agent met someone of the own color
                               set meetown meetown + 1
                               set meetown-agg meetown-agg + 1
-                              ;; if I cooperate then I reduce my PTR and increase my neighbors
                               if cooperate-with-same? [      ;;added to make the interaction two-way
                                 if [cooperate-with-same?] of myself [
                                   set coopown coopown + 1
@@ -400,7 +334,6 @@ to interact  ;; turtle procedure
                               ;; record stats on encounters
                               set meetother meetother + 1
                               set meetother-agg meetother-agg + 1
-                              ;; if we cooperate with different colors then reduce our PTR and increase our neighbors
                               if cooperate-with-different? [      ;;added to make the interaction two-way
                                 ifelse [cooperate-with-different?] of myself [
                                   set coopother coopother + 1
@@ -411,8 +344,6 @@ to interact  ;; turtle procedure
                                   ask one-of turtles-at -1 0 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
                                 ]
                                 [
-                                  ;set defother defother + 1
-                                  ;set defother-agg defother-agg + 1
                                 ]
                               ]
                             ]
@@ -431,43 +362,6 @@ to interact  ;; turtle procedure
   ]
 end
 
-;; use PTR to determine if the agent gets to reproduce
-;;to reproduce  ;; turtle procedure
-  ;; if a random variable is less than the PTR the agent can reproduce
- ;; if random-float 1.0 < ptr [
-    ;; find an empty location to reproduce into
-   ;; let destination one-of neighbors4 with [not any? turtles-here]
-    ;;if destination != nobody [
-      ;; if the location exists hatch a copy of the current turtle in the new location
-      ;;  but mutate the child
-      ;;hatch 1 [
-        ;;move-to destination
-        ;;mutate
-    ;;  ]
-  ;;  ]
-;;  ]
-;;end
-
-;; modify the children of agents according to the mutation rate
-;;to mutate  ;; turtle procedure
-  ;; mutate the color
-  ;;if random-float 1.0 < mutation-rate [
-    ;;let old-color color
-    ;;while [color = old-color]
-      ;;[ set color random-color ]
-  ;;]
-  ;; mutate the strategy flags;
-  ;; use NOT to toggle the flag
-  ;;if random-float 1.0 < mutation-rate [
-    ;;set cooperate-with-same? not cooperate-with-same?
-  ;;]
-  ;;if random-float 1.0 < mutation-rate [
-    ;;set cooperate-with-different? not cooperate-with-different?
-  ;;]
-  ;; make sure the shape of the agent reflects its strategy
-  ;;update-shape
-;;end
-
 to mutate  ;; turtle procedure
   if color != white and random-float 1.0 < mutation-rate [
     set cooperate-with-same? not cooperate-with-same?
@@ -478,13 +372,6 @@ to mutate  ;; turtle procedure
    ;;make sure the shape of the agent reflects its strategy
   update-shape
 end
-
-;to death
-  ;; check to see if a random variable is less than the death rate for each agent
-  ;ask turtles [
-    ;if random-float 1.0 < death-rate [ die ]
-  ;]
-;end
 
 ;; make sure the shape matches the strategy
 to update-shape
@@ -519,25 +406,7 @@ to recolor-turtles
 
 end
 
-
-;to scale100  ;; scaling everything to base 100
- ; set wealth-list sort-on[raw-wealth] turtles
- ; let counter 0
- ; let scale  [raw-wealth] of item 0 turtles-list / 100
- ; while [counter < length turtles-list]
-  ;[
-    ;;set [scaled-wealth] of item counter mylist  [wealth] of item counter mylist * scale
-    ;; change list to array to make mutable
-   ; set counter counter + 1
-  ;]
-
-;end
-;; this routine calculates a moving average of some stats over the last 100 ticks
 to update-stats
-  ;;set last100dd        shorten lput (count turtles with [shape = "square 2"]) last100dd
-  ;;set last100cc        shorten lput (count turtles with [shape = "circle"]) last100cc
-  ;;set last100cd        shorten lput (count turtles with [shape = "circle 2"]) last100cd
-  ;;set last100dc        shorten lput (count turtles with [shape = "square"]) last100dc
   set last100coopown   shorten lput coopown last100coopown
   set last100defother  shorten lput defother last100defother
   set last100meetown   shorten lput meetown last100meetown
@@ -795,7 +664,7 @@ chance-cooperate-with-same
 chance-cooperate-with-same
 0.0
 1.0
-0.2
+0.5
 0.01
 1
 NIL
@@ -810,7 +679,7 @@ chance-cooperate-with-different
 chance-cooperate-with-different
 0.0
 1.0
-0.2
+0.5
 0.01
 1
 NIL
@@ -843,7 +712,7 @@ count
 100.0
 0.0
 100.0
-false
+true
 true
 "" ""
 PENS
@@ -864,7 +733,7 @@ count
 100.0
 0.0
 100.0
-false
+true
 true
 "" ""
 PENS
@@ -885,7 +754,7 @@ count
 100.0
 0.0
 100.0
-false
+true
 true
 "" ""
 PENS
@@ -899,8 +768,8 @@ SLIDER
 89
 245
 122
-check-grades-every
-check-grades-every
+change-strategy-every
+change-strategy-every
 1
 100
 20.0
