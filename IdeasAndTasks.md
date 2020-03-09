@@ -45,3 +45,8 @@ Meeting 03/05 (Ben, Gian, Hanshi, Ashok)
 - [ ] Cleaning the code (Gian)
 - [ ] Behavior Space (Ashok)
 - [ ] Study the link function to find its capabilities (Gian)
+
+Meeting 03/08 (Ben, Gian, Hanshi, Ashok)
+- [ ] Fixing the 'to interact' section (Hanshi)
+- [ ] Exploring the link function to set up teams (Gian & Ben)
+- [ ] Developing a funtion to generate lists to collect data in behavior space (Ashok)
