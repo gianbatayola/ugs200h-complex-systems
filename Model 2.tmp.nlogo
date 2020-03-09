@@ -177,7 +177,7 @@ end
 to update-state
  if interactable > 0 [set interactable interactable - 1]
  let leave floor random-exponential 0.3  ;; maybe future use slider
- set interactable interactable + leave   
+ set interactable interactable + leave
 end
 to resetraw
  set raw-wealth scaled-wealth
@@ -236,58 +236,58 @@ end
 to interact  ;; turtle procedure
   let decider [[0 1] [1 0] [-1 0] [0 -1]]   ;; create list of locations
   set decider shuffle decider               ;; shuffle list
-  
+
   while [interactable = 0 and length decider > 0]         ;; must still have locations and be interactable
   [
   let location first decider                              ;; take first location
     if (([interactable] of turtles-at first location last location) = 0)   ;; make sure other turtle interatcable
     [
-      let neighborcolor ([color] of turtles-at first location last location) 
+      let neighborcolor ([color] of turtles-at first location last location)
       set meet meet + 1
       set meet-agg meet-agg + 1
-      if (neighborcolor = color)        
+      if (neighborcolor = color)
       [
            set meetown meetown + 1
            set meetown-agg meetown-agg + 1
-          
+
           if (cooperate-with-same? and  ([cooperate-with-same?] of turtles-at first location last location))
           [   set coopown coopown + 1
               set coopown-agg coopown-agg + 1
               set mine raw-wealth
               set yours [raw-wealth] of turtles-at first location last location
-              set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving   
+              set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving
               ask turtles-at first location last location                          ;; responder now gains
               [
-                 set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving   
-                 set interactable 1          
+                 set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
+                 set interactable 1
               ]
               set interactable 1     ;; no more interactions
-          
-          ] 
-         
+
+          ]
+
     ]
     if (neighborcolor != color)
     [
        set meetother meetother + 1
        set meetother-agg meetother-agg + 1
         if (cooperate-with-different? and  ([cooperate-with-different?] of turtles-at first location last location))
-       [  
+       [
           set coopother coopother + 1
           set coopother-agg coopother-agg + 1
           set mine raw-wealth                             ;; wealth of turtle initiaiting
           set yours [raw-wealth] of turtles-at first location last location   ; weath of responder
-          set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving   ;; new wealth of initiator   
+          set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving   ;; new wealth of initiator
           ask turtles-at first location last location                          ;; responder now gains
               [
-                 set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving   
-                 set interactable 1          
+                 set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
+                 set interactable 1
               ]
           set interactable 1     ;; no more interactions
-          
-       ] 
-    
-    ]  
-   
+
+       ]
+
+    ]
+
   ]
   set decider remove location decider  ;;remove location used
   ]
@@ -539,7 +539,7 @@ mutation-rate
 mutation-rate
 0.0
 1.0
-0.0
+0.278
 0.0010
 1
 NIL
@@ -656,7 +656,7 @@ chance-cooperate-with-same
 chance-cooperate-with-same
 0.0
 1.0
-0.2
+0.5
 0.01
 1
 NIL
@@ -671,7 +671,7 @@ chance-cooperate-with-different
 chance-cooperate-with-different
 0.0
 1.0
-0.2
+0.5
 0.01
 1
 NIL
@@ -686,7 +686,7 @@ exchange_rate
 exchange_rate
 0.01
 1
-0.1
+0.41
 0.01
 1
 NIL
@@ -764,7 +764,7 @@ check-grades-every
 check-grades-every
 1
 100
-20.0
+16.0
 1
 1
 days
