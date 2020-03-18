@@ -4,7 +4,6 @@ turtles-own [
   cooperate-with-same? ;; probability agents will cooperate with the same color
   cooperate-with-different? ;; probability agents will cooperate with a different color
   raw-wealth
-  scaled-wealth
   original
   interactable
 ]
