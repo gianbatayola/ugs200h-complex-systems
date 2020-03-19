@@ -50,3 +50,13 @@ Meeting 03/08 (Ben, Gian, Hanshi, Ashok)
 - [ ] Fixing the 'to interact' section (Hanshi)
 - [ ] Exploring the link function to set up teams (Gian & Ben)
 - [ ] Developing a funtion to generate lists to collect data in behavior space (Ashok)
+
+
+Meeting 03/11 (Ben, Gian, Hanshi, Ashok, Dr.Nair)
+- [ ] Coronavirus update - UURAF suspended (Plan to continue with model building)       
+
+Meeting 03/18 (Ben, Gian, Hanshi, Ashok, Dr.Nair)
+- [ ] Self-study variable for turtles that are not interacting in a tick (Hanshi)
+- [ ] Adding link function (Start a separate model) (Ben & Gian)
+- [ ] Change the names from Circle, Square etc. to altruist, egoist etc. (Ben)
+- [ ] Generating excel files based on Behavior Space experiments (Ashok)
