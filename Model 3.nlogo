@@ -152,6 +152,7 @@ to go
   ;; have all of the agents interact with other agents if they can
 
   ask turtles [ interact ]
+  ask turtles [self-gain]
   ask turtles [addwealth]
   set wealth-list sort-by > wealth-list
   if length wealth-list > 0 [set scale first wealth-list]
@@ -175,6 +176,10 @@ to go
   ]
 ]
   if ticks = 100 [stop]
+end
+
+to self-gain
+  if interactable = 0 [set raw-wealth raw-wealth * 1.2]
 end
 
 to update-state
