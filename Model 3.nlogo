@@ -194,7 +194,7 @@ end
 
 
 to self-gain
-  if interactable = 0 [set raw-wealth raw-wealth * 1.2]
+  if interactable = 0 [set raw-wealth raw-wealth * self-gain-rate]
 end
 
 to update-state
@@ -812,6 +812,21 @@ TEXTBOX
 11
 0.0
 0
+
+SLIDER
+15
+374
+187
+407
+self-gain-rate
+self-gain-rate
+1
+2
+1.21
+0.01
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
