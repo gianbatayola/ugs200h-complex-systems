@@ -647,7 +647,7 @@ PLOT
 230
 893
 436
-Altruist vs. Rank
+Circle vs. Rank
 time
 count
 0.0
@@ -730,7 +730,7 @@ PLOT
 231
 1178
 435
-Ethnocentric vs. Rank
+Circle 2 vs. Rank
 time
 count
 0.0
@@ -751,7 +751,7 @@ PLOT
 27
 1178
 232
-Egoist vs. Rank
+Square 2 vs. Rank
 time
 count
 0.0
@@ -772,7 +772,7 @@ PLOT
 28
 893
 232
-Cosmopolitan vs. Rank
+Square vs. Rank
 time
 count
 0.0
@@ -807,8 +807,8 @@ TEXTBOX
 359
 281
 581
-533
-\n\"Ethnocentric\"-cooperates with same colored agents, but does not cooperate with different colored agents (empty circle)\n\"Altruist\"-cooperates with all agents (filled circle)\n\"Cosmopolitan\"-cooperates with different color agents, but not with the same color agents (filled square)\n\"Egoist\"-cooperates with no one (empty square)\n\nWhite is the 100th-75th percentile\nGreen is the 75th-50th percentile\nYellow is the 50th-25th percentile\nRed is the 25th-0th percentile
+407
+Circles cooperate with same color\nSquares defect with same color\nFilled-in shapes cooperate with different color\nEmpty shapes defect with different color\n\nWhite is the 100th-75th percentile\nGreen is the 75th-50th percentile\nYellow is the 50th-25th percentile\nRed is the 25th-0th percentile
 11
 0.0
 0
