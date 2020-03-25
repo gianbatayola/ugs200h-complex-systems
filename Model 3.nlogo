@@ -60,6 +60,7 @@ to setup-full
   clear-all
   initialize-variables
   ask patches [ create-turtle ]
+  form-teams
   reset-ticks
 end
 
@@ -177,6 +178,20 @@ to go
 ]
   if ticks = 100 [stop]
 end
+
+to form-teams
+  ask patches [
+  if pxcor mod 2 = 0 and (pycor + 1) mod 2 = 0 ;top left in box
+    [ask turtles-at 0 0 [create-link-with one-of turtles-at 1 0 create-link-with one-of turtles-at 0 -1 create-link-with one-of turtles-at 1 -1 ]]
+  if (pxcor + 1) mod 2 = 0 and (pycor + 1) mod 2 = 0 ;top right in box
+    [ask turtles-at 0 0 [create-link-with one-of turtles-at -1 0 create-link-with one-of turtles-at 0 -1 create-link-with one-of turtles-at -1 -1 ]]
+ if pxcor mod 2 = 0 and pycor mod 2 = 0  ;bottom left in box
+    [ask turtles-at 0 0 [create-link-with one-of turtles-at 1 0 create-link-with one-of turtles-at 0 1 create-link-with one-of turtles-at 1 1 ]]
+  if (pxcor + 1)  mod 2 = 0 and pycor mod 2 = 0 ;bottom right in box
+    [ask turtles-at 0 0 [create-link-with one-of turtles-at -1 0 create-link-with one-of turtles-at 0 1 create-link-with one-of turtles-at -1 1 ]]
+  ]
+end
+
 
 to self-gain
   if interactable = 0 [set raw-wealth raw-wealth * 1.2]
