@@ -171,7 +171,7 @@ to go
   death
 
   tick
-  if ticks mod change-strategy-every = 0 [
+  if ticks mod check-grades-every = 0 [
   ask turtles [
     mutate
   ]
@@ -737,7 +737,7 @@ count
 100.0
 0.0
 100.0
-true
+false
 true
 "" ""
 PENS
@@ -758,7 +758,7 @@ count
 100.0
 0.0
 100.0
-true
+false
 true
 "" ""
 PENS
@@ -779,7 +779,7 @@ count
 100.0
 0.0
 100.0
-true
+false
 true
 "" ""
 PENS
@@ -793,8 +793,8 @@ SLIDER
 89
 245
 122
-change-strategy-every
-change-strategy-every
+check-grades-every
+check-grades-every
 1
 100
 100.0
