@@ -146,6 +146,7 @@ to go
   clear-stats     ;; clear the turn based stats
   ;;immigrate       ;; new agents immigrate into the world
   ask turtles [update-state]
+  ;;ask turtles [update-state-team] 
   ask turtles [resetraw]
   ;; reset the probability to reproduce
   ;;ask turtles [ set ptr initial-ptr ]
@@ -153,7 +154,9 @@ to go
   ;; have all of the agents interact with other agents if they can
 
   ask turtles [ interact ]
+  ;;ask turtles [interact-team]
   ask turtles [self-gain]
+  ;; ask turtles [self-gain-team]
   ask turtles [addwealth]
   set wealth-list sort-by > wealth-list
   if length wealth-list > 0 [set scale first wealth-list]
@@ -201,6 +204,12 @@ to update-state
  if interactable > 0 [set interactable interactable - 1]
  let leave floor random-exponential 1  ;; maybe future use slider 1 = mean of dirstibution
  set interactable interactable + leave
+end
+
+to update-state-team
+ if interactable > 0 [set interactable 0]
+ ;;let leave floor random-exponential 1  ;; maybe future use slider
+ ;;set interactable interactable + leave
 end
 to resetraw
  set raw-wealth scaled-wealth
@@ -326,6 +335,97 @@ to interact  ;; turtle procedure
   ]
 end
 
+to self-gain-team
+  
+  while [interactable < 4]
+  [ set raw-wealth raw-wealth * 1.2
+    set interactable interactable + 1 
+  ]
+end
+to interact-team  ;; turtle procedure
+  
+  let myid xcor mod 2 + 2 * (ycor mod 2)
+  let decider [[0 -1] [1 0] [1 -1] ]
+  if myid = 0
+  [set decider [[0 -1] [1 0] [1 -1] ] ] ;; create list of locations
+  if myid = 1
+  [ set decider [[-1 -1] [-1 0] [0 -1] ]
+  ] 
+    
+  if myid = 2
+  [ set decider [[0 1] [1 0] [1 1] ]
+  ] 
+    
+  if myid = 3
+  [ set decider [[-1 0] [0 1] [-1 1] ]
+  ] 
+  set decider shuffle decider               ;; shuffle list
+
+  while [length decider > 0 ]         ;; must still have locations and be interactable
+  [
+
+
+   ;;set check check + 1
+   let location first decider
+    let x1 first location
+    let y1 last location
+   if length [interactable] of turtles-at x1 y1 > 0  ;; make sure turtle exists at location
+   [
+    set in first [interactable] of turtles-at x1 y1
+    ;; take first location
+    if in < 4    ;; make sure other turtle interatcable
+    [ ;;set check1 check1 + 1
+      let neighborcolor first [color] of turtles-at x1 y1
+      set meet meet + 1
+      set meet-agg meet-agg + 1
+      if (neighborcolor = color)
+      [
+         ;;set check2 check2 + 1
+         set meetown meetown + 1
+         set meetown-agg meetown-agg + 1
+
+         if cooperate-with-same? and  first [cooperate-with-same?] of turtles-at first location last location
+         [   set coopown coopown + 1
+             set coopown-agg coopown-agg + 1
+             set mine raw-wealth
+             set yours first [raw-wealth] of turtles-at x1 y1
+             set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving
+           ;;  ask turtles-at x1 y1                          ;; responder now gains
+           ;;  [
+             ;;    set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
+               ;;  set interactable 1
+             ;; ]
+             set interactable interactable + 1     ;; no more interactions
+
+        ]
+
+    ]
+    if neighborcolor != color
+    [
+       set meetother meetother + 1
+       set meetother-agg meetother-agg + 1
+       if cooperate-with-different? and  first [cooperate-with-different?] of turtles-at x1 y1
+       [
+         set coopother coopother + 1
+         set coopother-agg coopother-agg + 1
+         set mine raw-wealth                             ;; wealth of turtle initiaiting
+         set yours first [raw-wealth] of turtles-at x1 y1   ; weath of responder
+         set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving   ;; new wealth of initiator
+         ;;ask turtles-at x1 y1                          ;; responder now gains
+         ;;[
+           ;;  set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
+             ;;set interactable 1
+         ;;]
+         set interactable interactable + 1    ;; no more interactions
+
+    ]
+  ]
+
+   ]
+  ]
+  set decider remove location decider  ;;remove location used
+  ]
+end
 ;; use PTR to determine if the agent gets to reproduce
 ;;to reproduce  ;; turtle procedure
   ;; if a random variable is less than the PTR the agent can reproduce
