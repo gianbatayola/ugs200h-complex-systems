@@ -46,7 +46,8 @@ globals [
   westneighborcolor     ;; color of the neighbor in west
   scale
   in
-
+  turtles-total         ;; total number of turtles
+  cluster               ;; yet to be defined but put it here as reminder
 ]
 
 to setup-empty
@@ -59,7 +60,8 @@ end
 to setup-full
   clear-all
   initialize-variables
-  ask patches [ create-turtle ]
+ ;; ask patches [ create-turtle ]
+ ask patches [ create-turtle-by-personality ]
   form-teams
   reset-ticks
 end
@@ -97,7 +99,8 @@ to initialize-variables
   set percentile25 0
   set scale 1
   set in 1
-
+  set cluster -1
+  set turtles-total 0
 end
 
 ;; creates a new agent in the world
@@ -116,7 +119,30 @@ to create-turtle  ;; patch procedure
     set cooperate-with-different? (random-float 1.0 < chance-cooperate-with-different)
     ;; change the shape of the agent on the basis of the strategy
     set interactable 0
+    set turtles-total turtles-total + 1
+    update-shape
 
+  ]
+
+end
+
+to create-turtle-by-personality  ;; patch procedure
+  sprout 1 [
+    set raw-wealth random-normal 50 25
+    if raw-wealth > 75 [ set color white]
+    if raw-wealth <= 75 and raw-wealth > 50 [ set color green ]
+    if raw-wealth <= 50 and raw-wealth > 25 [ set color yellow ]
+    if raw-wealth <= 25 [ set color red ]
+    set scaled-wealth raw-wealth
+    set original raw-wealth
+    ;; determine the strategy for interacting with someone of the same color
+    set cooperate-with-same? ( xcor mod 2 = 1)
+    set cooperate-with-different? (ycor mod 2 = 1)
+
+    
+    ;; change the shape of the agent on the basis of the strategy
+    set interactable 0
+    set turtles-total turtles-total + 1
     update-shape
 
   ]
@@ -477,8 +503,13 @@ end
 to death
   ;; check to see if a random variable is less than the death rate for each agent
   ask turtles [
-    if random-float 1.0 < death-rate [ die ]
+    if random-float 1.0 < death-rate 
+    [ 
+      die 
+      set turtles-total turtles total - 1 
+    ]
   ]
+
 end
 
 ;; make sure the shape matches the strategy
