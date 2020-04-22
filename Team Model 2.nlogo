@@ -663,6 +663,15 @@ to-report westneighborcolor1
   report westneighborcolor
 end
 
+to-report turtle-id
+  report [who] of turtle-set wealth-list
+end
+
+to-report raw-wealth1
+  report [raw-wealth] of turtle-set wealth-list
+end
+
+
 
 ; Copyright 2003 Uri Wilensky.
 ; See Info tab for full copyright and license.
@@ -1799,7 +1808,7 @@ setup-full repeat 150 [ go ]
     <go>go</go>
     <timeLimit steps="5"/>
     <exitCondition>ticks = 100</exitCondition>
-    <metric>count raw-wealth</metric>
+    <metric>raw-wealth2</metric>
     <enumeratedValueSet variable="immigrants-per-day">
       <value value="1"/>
     </enumeratedValueSet>
@@ -1823,6 +1832,124 @@ setup-full repeat 150 [ go ]
     </enumeratedValueSet>
     <enumeratedValueSet variable="death-rate">
       <value value="0.1"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment2" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>raw-wealth1</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment3" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>raw-wealth1</metric>
+    <metric>raw-turtles</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment4" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>turtle-id</metric>
+    <metric>raw-wealth1</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment5" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>turtle-id</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
