@@ -672,6 +672,37 @@ to-report raw-wealth1
 end
 
 
+to-report avg-raw
+  report mean [raw-wealth] of turtle-set wealth-list
+end
+
+to-report raw75
+  report percentile75
+end
+
+to-report raw50
+ report percentile50
+end
+
+to-report raw25
+  report percentile25
+end
+
+to-report raw-std
+  report standard-deviation [raw-wealth] of turtle-set wealth-list
+end
+
+to-report raw-max
+  report max [raw-wealth] of turtle-set wealth-list
+end
+
+to-report raw-min
+  report min [raw-wealth] of turtle-set wealth-list
+end
+
+to-report rnge
+  report max [raw-wealth] of turtle-set wealth-list - min [raw-wealth] of turtle-set wealth-list
+end
 
 ; Copyright 2003 Uri Wilensky.
 ; See Info tab for full copyright and license.
@@ -1950,6 +1981,73 @@ setup-full repeat 150 [ go ]
     </enumeratedValueSet>
     <enumeratedValueSet variable="mutation-rate">
       <value value="0"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="statistics test" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>turtle-id</metric>
+    <metric>raw-wealth1</metric>
+    <metric>avg-raw</metric>
+    <metric>raw75</metric>
+    <metric>raw50</metric>
+    <metric>raw25</metric>
+    <metric>raw-std</metric>
+    <metric>raw-max</metric>
+    <metric>raw-min</metric>
+    <metric>rnge</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
