@@ -36,7 +36,7 @@ globals [
   last100coop           ;; how many interactions have been cooperation in the last 100 ticks
   mine                  ;; the wealth that an agent has
   yours                 ;; the wealth that another agent has while interacting
-  wealth-list          ;; a list of turtles
+  wealth-list           ;; a list of turtles
   percentile75          ;; the 75th percentile of wealth
   percentile50          ;; the 50th percentile of wealth
   percentile25          ;; the 25th percentile of wealth
@@ -46,7 +46,11 @@ globals [
   westneighborcolor     ;; color of the neighbor in west
   scale
   in
+  value1
+  value2
+  period                ;; probabably should be a slider
 
+  state?
 ]
 
 to setup-empty
@@ -97,7 +101,10 @@ to initialize-variables
   set percentile25 0
   set scale 1
   set in 1
-
+  set state? true
+  set value1 .5
+  set value2 .5
+  set period 10
 end
 
 ;; creates a new agent in the world
@@ -148,6 +155,8 @@ to go
   clear-stats     ;; clear the turn based stats
   ;;immigrate       ;; new agents immigrate into the world
   ;;ask turtles [update-state]
+  if tick mod period = 0
+  [change-state]
   ask turtles [update-state-team]
   ask turtles [resetraw]
   ;; reset the probability to reproduce
@@ -197,9 +206,22 @@ to form-teams
   ]
 end
 
+to change-state
+  ifelse state? 
+ [
+   [ set value1 exchange-rate
+     set value2 self-gain-rate - 1
+    ]
+   [ set value1 self-gain-rate - 1
+     set value2 exchange-rate
+
+    ]
+ ]
+ set state? not state?
+end
 
 to self-gain
-  if interactable = 0 [set raw-wealth raw-wealth * self-gain-rate]
+  if interactable = 0 [set raw-wealth raw-wealth * (self-gain-rate)]
 end
 
 to update-state
@@ -299,10 +321,10 @@ to interact  ;; turtle procedure
              set coopown-agg coopown-agg + 1
              set mine raw-wealth
              set yours first [raw-wealth] of turtles-at x1 y1
-             set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving
+             set raw-wealth raw-wealth  + yours * value1 - mine * cost-of-giving
              ask turtles-at x1 y1                          ;; responder now gains
              [
-                 set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
+                 set raw-wealth raw-wealth  + mine * value1 - yours * cost-of-giving
                  set interactable 1
               ]
              set interactable 1     ;; no more interactions
@@ -320,10 +342,10 @@ to interact  ;; turtle procedure
          set coopother-agg coopother-agg + 1
          set mine raw-wealth                             ;; wealth of turtle initiaiting
          set yours first [raw-wealth] of turtles-at x1 y1   ; weath of responder
-         set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving   ;; new wealth of initiator
+         set raw-wealth raw-wealth  + yours * value1 - mine * cost-of-giving   ;; new wealth of initiator
          ask turtles-at x1 y1                          ;; responder now gains
          [
-             set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
+             set raw-wealth raw-wealth  + mine * value1 - yours * cost-of-giving
              set interactable 1
          ]
          set interactable 1     ;; no more interactions
@@ -340,7 +362,7 @@ end
 to self-gain-team
 
   while [interactable < 4]
-  [ set raw-wealth raw-wealth * self-gain-rate
+  [ set raw-wealth raw-wealth * (value2 + 1)
     set interactable interactable + 1
   ]
 end
@@ -391,7 +413,7 @@ to interact-team  ;; turtle procedure
              set coopown-agg coopown-agg + 1
              set mine raw-wealth
              set yours first [raw-wealth] of turtles-at x1 y1
-             set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving
+             set raw-wealth raw-wealth  + yours * value1 - mine * cost-of-giving
            ;;  ask turtles-at x1 y1                          ;; responder now gains
            ;;  [
              ;;    set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
@@ -412,7 +434,7 @@ to interact-team  ;; turtle procedure
          set coopother-agg coopother-agg + 1
          set mine raw-wealth                             ;; wealth of turtle initiaiting
          set yours first [raw-wealth] of turtles-at x1 y1   ; weath of responder
-         set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving   ;; new wealth of initiator
+         set raw-wealth raw-wealth  + yours * value1 - mine * cost-of-giving   ;; new wealth of initiator
          ;;ask turtles-at x1 y1                          ;; responder now gains
          ;;[
            ;;  set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
