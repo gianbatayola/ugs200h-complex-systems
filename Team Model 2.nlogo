@@ -48,6 +48,10 @@ globals [
   in
   turtles-total         ;; total number of turtles
   cluster               ;; yet to be defined but put it here as reminder
+  raw-wealth-list
+  turtles-list
+  color-list
+  shape-list
 ]
 
 to setup-empty
@@ -101,6 +105,8 @@ to initialize-variables
   set in 1
   set cluster -1
   set turtles-total 0
+  set raw-wealth-list []
+  set turtles-list []
 end
 
 ;; creates a new agent in the world
@@ -178,7 +184,7 @@ to go
   ;;ask turtles [ set ptr initial-ptr ]
   set wealth-list []
   ;; have all of the agents interact with other agents if they can
-
+  set raw-wealth-list []
   ask turtles [ interact ]
   ;;ask turtles [interact-team]
   ask turtles [self-gain]
@@ -663,15 +669,61 @@ to-report westneighborcolor1
   report westneighborcolor
 end
 
-to-report turtle-id
-  report [who] of turtle-set wealth-list
-end
-
 to-report raw-wealth1
-  report [raw-wealth] of turtle-set wealth-list
+  set raw-wealth-list []
+  foreach sort turtles [the-turtle -> set raw-wealth-list lput [raw-wealth] of the-turtle raw-wealth-list]
+  report raw-wealth-list
 end
 
+to-report turtle-list1
+  set turtles-list []
+  foreach sort turtles [the-turtle -> set turtles-list lput [who] of the-turtle turtles-list]
+  report turtles-list
+end
 
+to-report color-list1
+  set color-list []
+  foreach sort turtles [the-turtle -> set color-list lput [color] of the-turtle color-list]
+  report color-list
+end
+
+to-report shape-list1
+  set shape-list []
+  foreach sort turtles [the-turtle -> set shape-list lput [shape] of the-turtle shape-list]
+  report shape-list
+end
+
+to-report avg-raw
+  report mean [raw-wealth] of turtle-set wealth-list
+end
+
+to-report raw75
+  report percentile75
+end
+
+to-report raw50
+ report percentile50
+end
+
+to-report raw25
+  report percentile25
+end
+
+to-report raw-std
+  report standard-deviation [raw-wealth] of turtle-set wealth-list
+end
+
+to-report raw-max
+  report max [raw-wealth] of turtle-set wealth-list
+end
+
+to-report raw-min
+  report min [raw-wealth] of turtle-set wealth-list
+end
+
+;to-report rnge
+  ;report max [raw-wealth] of turtle-set wealth-list - min [raw-wealth] of turtle-set wealth-list
+;end
 
 ; Copyright 2003 Uri Wilensky.
 ; See Info tab for full copyright and license.
@@ -1356,7 +1408,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.1.0
+NetLogo 6.1.1
 @#$#@#$#@
 setup-full repeat 150 [ go ]
 @#$#@#$#@
@@ -1950,6 +2002,75 @@ setup-full repeat 150 [ go ]
     </enumeratedValueSet>
     <enumeratedValueSet variable="mutation-rate">
       <value value="0"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="statistics test" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>turtle-list1</metric>
+    <metric>raw-wealth1</metric>
+    <metric>color-list1</metric>
+    <metric>shape-list1</metric>
+    <metric>avg-raw</metric>
+    <metric>raw75</metric>
+    <metric>raw50</metric>
+    <metric>raw25</metric>
+    <metric>raw-std</metric>
+    <metric>raw-max</metric>
+    <metric>raw-min</metric>
+    <metric>scale</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>

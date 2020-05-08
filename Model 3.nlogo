@@ -60,8 +60,8 @@ end
 to setup-full
   clear-all
   initialize-variables
- ;; ask patches [ create-turtle ]
- ask patches [ create-turtle-by-personality ]
+  ask patches [ create-turtle ]
+ ;;ask patches [ create-turtle-by-personality ]
   form-teams
   reset-ticks
 end
@@ -139,7 +139,7 @@ to create-turtle-by-personality  ;; patch procedure
     set cooperate-with-same? ( xcor mod 2 = 1)
     set cooperate-with-different? (ycor mod 2 = 1)
 
-    
+
     ;; change the shape of the agent on the basis of the strategy
     set interactable 0
     set turtles-total turtles-total + 1
@@ -172,7 +172,7 @@ to go
   clear-stats     ;; clear the turn based stats
   ;;immigrate       ;; new agents immigrate into the world
   ask turtles [update-state]
-  ;;ask turtles [update-state-team] 
+  ;;ask turtles [update-state-team]
   ask turtles [resetraw]
   ;; reset the probability to reproduce
   ;;ask turtles [ set ptr initial-ptr ]
@@ -362,29 +362,29 @@ to interact  ;; turtle procedure
 end
 
 to self-gain-team
-  
+
   while [interactable < 4]
   [ set raw-wealth raw-wealth * 1.2
-    set interactable interactable + 1 
+    set interactable interactable + 1
   ]
 end
 to interact-team  ;; turtle procedure
-  
+
   let myid xcor mod 2 + 2 * (ycor mod 2)
   let decider [[0 -1] [1 0] [1 -1] ]
   if myid = 0
   [set decider [[0 -1] [1 0] [1 -1] ] ] ;; create list of locations
   if myid = 1
   [ set decider [[-1 -1] [-1 0] [0 -1] ]
-  ] 
-    
+  ]
+
   if myid = 2
   [ set decider [[0 1] [1 0] [1 1] ]
-  ] 
-    
+  ]
+
   if myid = 3
   [ set decider [[-1 0] [0 1] [-1 1] ]
-  ] 
+  ]
   set decider shuffle decider               ;; shuffle list
 
   while [length decider > 0 ]         ;; must still have locations and be interactable
@@ -503,10 +503,10 @@ end
 to death
   ;; check to see if a random variable is less than the death rate for each agent
   ask turtles [
-    if random-float 1.0 < death-rate 
-    [ 
-      die 
-      set turtles-total turtles total - 1 
+    if random-float 1.0 < death-rate
+    [
+      die
+      set turtles-total turtles-total - 1
     ]
   ]
 
@@ -1347,7 +1347,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.1.0
+NetLogo 6.1.1
 @#$#@#$#@
 setup-full repeat 150 [ go ]
 @#$#@#$#@
@@ -1794,35 +1794,35 @@ setup-full repeat 150 [ go ]
       <value value="50"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="experiment" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="Test 1" repetitions="1" runMetricsEveryStep="true">
     <setup>setup-full</setup>
     <go>go</go>
-    <timeLimit steps="5"/>
     <exitCondition>ticks = 100</exitCondition>
     <metric>count raw-wealth</metric>
-    <enumeratedValueSet variable="immigrants-per-day">
-      <value value="1"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="gain-of-receiving">
-      <value value="0.53"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="exchange_rate">
-      <value value="0.75"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="chance-cooperate-with-same">
-      <value value="0.45"/>
+    <metric>export-plot "test.csv"</metric>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="100"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="cost-of-giving">
-      <value value="0"/>
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.15"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="mutation-rate">
-      <value value="0.005"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="chance-cooperate-with-different">
-      <value value="0.45"/>
+      <value value="0"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="death-rate">
-      <value value="0.1"/>
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.21"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>

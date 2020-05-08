@@ -1,0 +1,53 @@
+---
+title: "UURAF"
+author: "Ashok"
+date: "5/8/2020"
+output: pdf_document
+---
+
+```{r}
+library("stringr")
+library("tidyr")
+library("dplyr")
+
+#read excel data
+team_model_2_data <- read.csv("Team Model 2 statistics test-table.csv", stringsAsFactors = FALSE)
+
+#Cleaning the strings
+team_model_2_data$`turtle.list1` <- str_remove_all(team_model_2_data$`turtle.list1`, "[\\[\\]]")
+team_model_2_data$`raw.wealth1` <- str_remove_all(team_model_2_data$`raw.wealth1`, "[\\[\\]]")
+team_model_2_data$`color.list1` <- str_remove_all(team_model_2_data$`color.list1`, "[\\[\\]]")
+team_model_2_data$`shape.list1` <- str_remove_all(team_model_2_data$`shape.list1`, "[\\[\\]]")
+team_model_2_data$`shape.list1` <- str_replace_all(team_model_2_data$`shape.list1`, " 2", "-2")
+
+#Converting colors from numbers to text
+team_model_2_data$`color.list1` <- str_replace_all(team_model_2_data$`color.list1`, "9.9", "white")
+team_model_2_data$`color.list1` <- str_replace_all(team_model_2_data$`color.list1`, "15", "red")
+team_model_2_data$`color.list1` <- str_replace_all(team_model_2_data$`color.list1`, "45", "yellow")
+team_model_2_data$`color.list1` <- str_replace_all(team_model_2_data$`color.list1`, "55", "green")
+
+#Populating the missing metrics for tick zero
+for(i in 1:nrow(team_model_2_data)) {
+  if (team_model_2_data$step[[i]] == 0) {
+    stepzero_rwlist = strsplit(as.character(team_model_2_data$raw.wealth1[[i]]), " ")
+    stepzero_rwlist = as.numeric(unlist(stepzero_rwlist))
+    team_model_2_data$avg.raw[[i]] = mean(stepzero_rwlist)
+    team_model_2_data$raw75[[i]] = quantile(stepzero_rwlist, probs = 0.75)
+    team_model_2_data$raw50[[i]] = quantile(stepzero_rwlist, probs = 0.5)
+    team_model_2_data$raw25[[i]] = quantile(stepzero_rwlist, probs = 0.25)
+    team_model_2_data$raw.std[[i]] = sd(stepzero_rwlist)
+    team_model_2_data$raw.max[[i]] = max(stepzero_rwlist)
+    team_model_2_data$raw.min[[i]] = min(stepzero_rwlist)
+  }
+}
+
+
+#Transposing the single cell values to multiple rows
+team_model_2_data <- separate_rows(team_model_2_data, `turtle.list1`, `raw.wealth1`, `color.list1`, `shape.list1`, convert = TRUE, sep = " ")
+
+#Write csv file
+write.csv(team_model_2_data, file = "Team Model 2 clean.csv")
+
+
+```
+
