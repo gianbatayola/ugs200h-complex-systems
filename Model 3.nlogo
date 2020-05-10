@@ -161,6 +161,7 @@ to clear-stats
   set defother 0
   set meetother 0
   set coopother 0
+  set cluster 0
   ;;set northneighborcolor 0
   ;;set eastneighborcolor 0
   ;;set southneighborcolor 0
@@ -195,7 +196,8 @@ to go
   ;;ask turtles [ reproduce ]
   ;;death           ;; kill some of the agents
   update-stats    ;; update the states for the aggregate and last 100 ticks
-  ;;ask turtles [recolor]
+ ask turtles [clustering]  
+;;ask turtles [recolor]
   recolor-turtles
   death
 
@@ -289,6 +291,34 @@ to transact
   ask one-of turtles-on neighbors4 [set yours raw-wealth]
   set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
   ask one-of turtles-on neighbors4 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
+end
+
+to clustering  ;; turtle procedure
+  let local-total 0.0
+  let decider [[0 1] [1 0] [-1 0] [0 -1]]   ;; create list of locations
+  while [length decider > 0 ]         ;; must still have locations and be interactable
+  [
+
+
+   ;;set check check + 1
+   let location first decider
+    let x1 first location
+    let y1 last location
+   if length [interactable] of turtles-at x1 y1 > 0  ;; make sure turtle exists at location
+   [
+    set in first [interactable] of turtles-at x1 y1
+
+      let neighborcolor first [color] of turtles-at x1 y1
+      if (neighborcolor = color)
+      [
+         set local-total local-total + 1
+      ]
+   ]
+    set decider remove location decider 
+
+   ]
+   set local-total local-total / 676         ;; hard coded in
+   set cluster cluster + local-total
 end
 
 to interact  ;; turtle procedure
