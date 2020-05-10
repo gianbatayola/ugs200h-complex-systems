@@ -161,6 +161,7 @@ to clear-stats
   set defother 0
   set meetother 0
   set coopother 0
+  set cluster 0
   ;;set northneighborcolor 0
   ;;set eastneighborcolor 0
   ;;set southneighborcolor 0
@@ -196,6 +197,7 @@ to go
   ;;death           ;; kill some of the agents
   update-stats    ;; update the states for the aggregate and last 100 ticks
   ;;ask turtles [recolor]
+  ask turtles [clustering-team]
   recolor-turtles
   death
 
@@ -206,6 +208,45 @@ to go
   ]
 ]
   if ticks = 100 [stop]
+end
+
+to clustering-team  ;; turtle procedure
+  let total-same 0.0
+  let myid xcor mod 2 + 2 * (ycor mod 2)
+  let decider [[0 -1] [1 0] [1 -1] ]
+  if myid = 0
+  [set decider [[0 -1] [1 0] [1 -1] ] ] ;; create list of locations
+  if myid = 1
+  [ set decider [[-1 -1] [-1 0] [0 -1] ]
+  ]
+
+  if myid = 2
+  [ set decider [[0 1] [1 0] [1 1] ]
+  ]
+
+  if myid = 3
+  [ set decider [[-1 0] [0 1] [-1 1] ]
+  ]
+  while [length decider > 0 ]         ;; must still have locations and be interactable
+  [
+     let location first decider
+    let x1 first location
+    let y1 last location
+   if length [interactable] of turtles-at x1 y1 > 0  ;; make sure turtle exists at location
+   [
+    
+      let neighborcolor first [color] of turtles-at x1 y1
+      if (neighborcolor = color)
+      [
+         set total-same total-same + 1 
+      ]
+
+    
+  ]
+    set decider remove location decider  ;;remove location used
+  ]
+   set total-same total-same / 676
+   set cluster cluster + total-same
 end
 
 to form-teams
