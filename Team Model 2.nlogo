@@ -7,22 +7,18 @@ turtles-own [
   scaled-wealth
   original
   interactable
-  northcolor
-  eastcolor
-  southcolor
-  westcolor
-  northwho
-  eastwho
-  southwho
-  westwho
-  northshape
-  eastshape
-  southshape
-  westshape
-  northrawwealth
-  eastrawwealth
-  southrawwealth
-  westrawwealth
+  n1color
+  n2color
+  n3color
+  n1who
+  n2who
+  n3who
+  n1shape
+  n2shape
+  n3shape
+  n1rawwealth
+  n2rawwealth
+  n3rawwealth
 ]
 
 globals [
@@ -64,22 +60,18 @@ globals [
   turtles-list
   color-list
   shape-list
-  northcolor-list
-  eastcolor-list
-  southcolor-list
-  westcolor-list
-  northwho-list
-  eastwho-list
-  southwho-list
-  westwho-list
-  northshape-list
-  eastshape-list
-  southshape-list
-  westshape-list
-  northrawwealth-list
-  eastrawwealth-list
-  southrawwealth-list
-  westrawwealth-list
+  n1color-list
+  n2color-list
+  n3color-list
+  n1who-list
+  n2who-list
+  n3who-list
+  n1shape-list
+  n2shape-list
+  n3shape-list
+  n1rawwealth-list
+  n2rawwealth-list
+  n3rawwealth-list
 ]
 
 to setup-empty
@@ -580,26 +572,76 @@ end
 
 
 to measure
+  ; position is clockwise
+  if pxcor mod 2 = 0 and (pycor + 1) mod 2 = 0 ; top left
+  [set n1color [color] of turtles-at 1 0
+  set n2color [color] of turtles-at 1 -1
+  set n3color [color] of turtles-at 0 -1
 
-  set northcolor [color] of turtles-at 0 1
-  set eastcolor [color] of turtles-at 1 0
-  set southcolor [color] of turtles-at 0 -1
-  set westcolor [color] of turtles-at -1 0
+  set n1who [who] of turtles-at 1 0
+  set n2who [who] of turtles-at 1 -1
+  set n3who [who] of turtles-at 0 -1
 
-  set northwho [who] of turtles-at 0 1
-  set eastwho [who] of turtles-at 1 0
-  set southwho [who] of turtles-at 0 -1
-  set westwho [who] of turtles-at -1 0
+  set n1shape [shape] of turtles-at 0 1
+  set n2shape [shape] of turtles-at 1 0
+  set n3shape [shape] of turtles-at 0 -1
 
-  set northshape [shape] of turtles-at 0 1
-  set eastshape [shape] of turtles-at 1 0
-  set southshape [shape] of turtles-at 0 -1
-  set westshape [shape] of turtles-at -1 0
+  set n1rawwealth [raw-wealth] of turtles-at 0 1
+  set n2rawwealth [raw-wealth] of turtles-at 1 0
+  set n3rawwealth [raw-wealth] of turtles-at 0 -1]
 
-  set northrawwealth [raw-wealth] of turtles-at 0 1
-  set eastrawwealth [raw-wealth] of turtles-at 1 0
-  set southrawwealth [raw-wealth] of turtles-at 0 -1
-  set westrawwealth [raw-wealth] of turtles-at -1 0
+
+  if (pxcor + 1) mod 2 = 0 and (pycor + 1) mod 2 = 0 ; top right
+  [set n1color [color] of turtles-at 0 -1
+  set n2color [color] of turtles-at -1 -1
+  set n3color [color] of turtles-at -1 0
+
+  set n1who [who] of turtles-at 0 -1
+  set n2who [who] of turtles-at -1 -1
+  set n3who [who] of turtles-at -1 0
+
+  set n1shape [shape] of turtles-at 0 -1
+  set n2shape [shape] of turtles-at -1 -1
+  set n3shape [shape] of turtles-at -1 0
+
+  set n1rawwealth [raw-wealth] of turtles-at 0 -1
+  set n2rawwealth [raw-wealth] of turtles-at -1 -1
+  set n3rawwealth [raw-wealth] of turtles-at -1 0]
+
+
+  if pxcor mod 2 = 0 and pycor mod 2 = 0 ; bottom left
+  [set n1color [color] of turtles-at 0 1
+  set n2color [color] of turtles-at 1 1
+  set n3color [color] of turtles-at 1 0
+
+  set n1who [who] of turtles-at 0 1
+  set n2who [who] of turtles-at 1 1
+  set n3who [who] of turtles-at 1 0
+
+  set n1shape [shape] of turtles-at 0 1
+  set n2shape [shape] of turtles-at 1 1
+  set n3shape [shape] of turtles-at 1 0
+
+  set n1rawwealth [raw-wealth] of turtles-at 0 1
+  set n2rawwealth [raw-wealth] of turtles-at 1 1
+  set n3rawwealth [raw-wealth] of turtles-at 1 0]
+
+  if (pxcor + 1) mod 2 = 0 and pycor mod 2 = 0 ; bottom right
+  [set n1color [color] of turtles-at -1 0
+  set n2color [color] of turtles-at -1 1
+  set n3color [color] of turtles-at 0 1
+
+  set n1who [who] of turtles-at -1 0
+  set n2who [who] of turtles-at -1 1
+  set n3who [who] of turtles-at 0 1
+
+  set n1shape [shape] of turtles-at -1 0
+  set n2shape [shape] of turtles-at -1 1
+  set n3shape [shape] of turtles-at 0 1
+
+  set n1rawwealth [raw-wealth] of turtles-at -1 0
+  set n2rawwealth [raw-wealth] of turtles-at -1 1
+  set n3rawwealth [raw-wealth] of turtles-at 0 1]
 
 end
 
@@ -734,102 +776,77 @@ to-report shape-list1
   report shape-list
 end
 
-to-report northcolor1
-  set northcolor-list []
-  foreach sort turtles [the-turtle -> set northcolor-list lput [northcolor] of the-turtle northcolor-list]
-  report northcolor-list
+to-report n1color1
+  set n1color-list []
+  foreach sort turtles [the-turtle -> set n1color-list lput [n1color] of the-turtle n1color-list]
+  report n1color-list
 end
 
-to-report eastcolor1
-  set eastcolor-list []
-  foreach sort turtles [the-turtle -> set eastcolor-list lput [eastcolor] of the-turtle eastcolor-list]
-  report eastcolor-list
+to-report n2color1
+  set n2color-list []
+  foreach sort turtles [the-turtle -> set n2color-list lput [n2color] of the-turtle n2color-list]
+  report n2color-list
 end
 
-to-report southcolor1
-  set southcolor-list []
-  foreach sort turtles [the-turtle -> set southcolor-list lput [southcolor] of the-turtle southcolor-list]
-  report southcolor-list
+to-report n3color1
+  set n3color-list []
+  foreach sort turtles [the-turtle -> set n3color-list lput [n3color] of the-turtle n3color-list]
+  report n3color-list
 end
 
-to-report westcolor1
-  set westcolor-list []
-  foreach sort turtles [the-turtle -> set westcolor-list lput [westcolor] of the-turtle westcolor-list]
-  report westcolor-list
+to-report n1who1
+  set n1who-list []
+  foreach sort turtles [the-turtle -> set n1who-list lput [n1who] of the-turtle n1who-list]
+  report n1who-list
 end
 
-to-report northwho1
-  set northwho-list []
-  foreach sort turtles [the-turtle -> set northwho-list lput [northwho] of the-turtle northwho-list]
-  report northwho-list
+to-report n2who1
+  set n2who-list []
+  foreach sort turtles [the-turtle -> set n2who-list lput [n2who] of the-turtle n2who-list]
+  report n2who-list
 end
 
-to-report eastwho1
-  set eastwho-list []
-  foreach sort turtles [the-turtle -> set eastwho-list lput [eastwho] of the-turtle eastwho-list]
-  report eastwho-list
+to-report n3who1
+  set n3who-list []
+  foreach sort turtles [the-turtle -> set n3who-list lput [n3who] of the-turtle n3who-list]
+  report n3who-list
 end
 
-to-report southwho1
-  set southwho-list []
-  foreach sort turtles [the-turtle -> set southwho-list lput [southwho] of the-turtle southwho-list]
-  report southwho-list
+to-report n1shape1
+  set n1shape-list []
+  foreach sort turtles [the-turtle -> set n1shape-list lput [n1shape] of the-turtle n1shape-list]
+  report n1shape-list
 end
 
-to-report westwho1
-  set westwho-list []
-  foreach sort turtles [the-turtle -> set westwho-list lput [westwho] of the-turtle westwho-list]
-  report westwho-list
+to-report n2shape1
+  set n2shape-list []
+  foreach sort turtles [the-turtle -> set n2shape-list lput [n2shape] of the-turtle n2shape-list]
+  report n2shape-list
 end
 
-to-report northshape1
-  set northshape-list []
-  foreach sort turtles [the-turtle -> set northshape-list lput [northshape] of the-turtle northshape-list]
-  report northshape-list
+to-report n3shape1
+  set n3shape-list []
+  foreach sort turtles [the-turtle -> set n3shape-list lput [n3shape] of the-turtle n3shape-list]
+  report n3shape-list
 end
 
-to-report eastshape1
-  set eastshape-list []
-  foreach sort turtles [the-turtle -> set eastshape-list lput [eastshape] of the-turtle eastshape-list]
-  report eastshape-list
+to-report n1rawwealth1
+  set n1rawwealth-list []
+  foreach sort turtles [the-turtle -> set n1rawwealth-list lput [n1rawwealth] of the-turtle n1rawwealth-list]
+  report n1rawwealth-list
 end
 
-to-report southshape1
-  set southshape-list []
-  foreach sort turtles [the-turtle -> set southshape-list lput [southshape] of the-turtle southshape-list]
-  report southshape-list
+to-report n2rawwealth1
+  set n2rawwealth-list []
+  foreach sort turtles [the-turtle -> set n2rawwealth-list lput [n2rawwealth] of the-turtle n2rawwealth-list]
+  report n2rawwealth-list
 end
 
-to-report westshape1
-  set westshape-list []
-  foreach sort turtles [the-turtle -> set westshape-list lput [westshape] of the-turtle westshape-list]
-  report westshape-list
+to-report n3rawwealth1
+  set n3rawwealth-list []
+  foreach sort turtles [the-turtle -> set n3rawwealth-list lput [n3rawwealth] of the-turtle n3rawwealth-list]
+  report n3rawwealth-list
 end
-
-to-report northrawwealth1
-  set northrawwealth-list []
-  foreach sort turtles [the-turtle -> set northrawwealth-list lput [northrawwealth] of the-turtle northrawwealth-list]
-  report northrawwealth-list
-end
-
-to-report eastrawwealth1
-  set eastrawwealth-list []
-  foreach sort turtles [the-turtle -> set eastrawwealth-list lput [eastrawwealth] of the-turtle eastrawwealth-list]
-  report eastrawwealth-list
-end
-
-to-report southrawwealth1
-  set southrawwealth-list []
-  foreach sort turtles [the-turtle -> set southrawwealth-list lput [southrawwealth] of the-turtle southrawwealth-list]
-  report southrawwealth-list
-end
-
-to-report westrawwealth1
-  set westrawwealth-list []
-  foreach sort turtles [the-turtle -> set westrawwealth-list lput [westrawwealth] of the-turtle westrawwealth-list]
-  report westrawwealth-list
-end
-
 
 to-report avg-raw
   report mean [raw-wealth] of turtle-set wealth-list
@@ -2175,15 +2192,18 @@ setup-full repeat 150 [ go ]
     <setup>setup-full</setup>
     <go>go</go>
     <metric>raw-wealth1</metric>
-    <metric>avg-raw</metric>
-    <metric>raw75</metric>
-    <metric>raw50</metric>
-    <metric>raw25</metric>
-    <metric>raw-std</metric>
-    <metric>raw-max</metric>
-    <metric>raw-min</metric>
-    <metric>northwho1</metric>
-    <metric>northshape1</metric>
+    <metric>n1color1</metric>
+    <metric>n2color1</metric>
+    <metric>n3color1</metric>
+    <metric>n1who1</metric>
+    <metric>n2who1</metric>
+    <metric>n3who1</metric>
+    <metric>n1shape1</metric>
+    <metric>n2shape1</metric>
+    <metric>n3shape1</metric>
+    <metric>n1rawwealth1</metric>
+    <metric>n2rawwealth1</metric>
+    <metric>n3rawwealth1</metric>
     <enumeratedValueSet variable="exchange_rate">
       <value value="0.2"/>
     </enumeratedValueSet>
