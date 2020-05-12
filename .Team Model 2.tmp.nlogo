@@ -2184,6 +2184,8 @@ setup-full repeat 150 [ go ]
     <metric>raw-max</metric>
     <metric>raw-min</metric>
     <metric>rnge</metric>
+    <metric>northwho1</metric>
+    <metric>northshape1</metric>
     <enumeratedValueSet variable="exchange_rate">
       <value value="0.2"/>
     </enumeratedValueSet>
