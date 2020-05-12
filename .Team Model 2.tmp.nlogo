@@ -7,22 +7,18 @@ turtles-own [
   scaled-wealth
   original
   interactable
-  northcolor
-  eastcolor
-  southcolor
-  westcolor
-  northwho
-  eastwho
-  southwho
-  westwho
-  northshape
-  eastshape
-  southshape
-  westshape
-  northrawwealth
-  eastrawwealth
-  southrawwealth
-  westrawwealth
+  n1color
+  n2color
+  n3color
+  n1who
+  n2who
+  n3who
+  n1shape
+  n2shape
+  n3shape
+  n1rawwealth
+  n2rawwealth
+  n3rawwealth
 ]
 
 globals [
@@ -580,26 +576,76 @@ end
 
 
 to measure
+  ; position is clockwise
+  if pxcor mod 2 = 0 and (pycor + 1) mod 2 = 0 ; top left
+  [set n1color [color] of turtles-at 1 0
+  set n2color [color] of turtles-at 1 -1
+  set n3color [color] of turtles-at 0 -1
 
-  set northcolor [color] of turtles-at 0 1
-  set eastcolor [color] of turtles-at 1 0
-  set southcolor [color] of turtles-at 0 -1
-  set westcolor [color] of turtles-at -1 0
+  set n1who [color] of turtles-at 1 0
+  set n2who [color] of turtles-at 1 -1
+  set n3who [color] of turtles-at 0 -1
 
-  set northwho [who] of turtles-at 0 1
-  set eastwho [who] of turtles-at 1 0
-  set southwho [who] of turtles-at 0 -1
-  set westwho [who] of turtles-at -1 0
+  set n1shape [shape] of turtles-at 0 1
+  set n2shape [shape] of turtles-at 1 0
+  set n3shape [shape] of turtles-at 0 -1
 
-  set northshape [shape] of turtles-at 0 1
-  set eastshape [shape] of turtles-at 1 0
-  set southshape [shape] of turtles-at 0 -1
-  set westshape [shape] of turtles-at -1 0
+  set n1rawwealth [raw-wealth] of turtles-at 0 1
+  set n2rawwealth [raw-wealth] of turtles-at 1 0
+  set n3rawwealth [raw-wealth] of turtles-at 0 -1]
 
-  set northrawwealth [raw-wealth] of turtles-at 0 1
-  set eastrawwealth [raw-wealth] of turtles-at 1 0
-  set southrawwealth [raw-wealth] of turtles-at 0 -1
-  set westrawwealth [raw-wealth] of turtles-at -1 0
+
+  if (pxcor + 1) mod 2 = 0 and (pycor + 1) mod 2 = 0 ; top right
+  [set n1color [color] of turtles-at 0 -1
+  set n2color [color] of turtles-at -1 -1
+  set n3color [color] of turtles-at -1 0
+
+  set n1who [color] of turtles-at 0 -1
+  set n2who [color] of turtles-at -1 -1
+  set n3who [color] of turtles-at -1 0
+
+  set n1shape [shape] of turtles-at 0 -1
+  set n2shape [shape] of turtles-at -1 -1
+  set n3shape [shape] of turtles-at -1 0
+
+  set n1rawwealth [raw-wealth] of turtles-at 0 -1
+  set n2rawwealth [raw-wealth] of turtles-at 1 0
+  set n3rawwealth [raw-wealth] of turtles-at 0 -1]
+
+
+  if pxcor mod 2 = 0 and pycor mod 2 = 0 ; bottom left
+  [set n1color [color] of turtles-at 1 0
+  set n2color [color] of turtles-at 1 -1
+  set n3color [color] of turtles-at 0 -1
+
+  set n1who [color] of turtles-at 1 0
+  set n2who [color] of turtles-at 1 -1
+  set n3who [color] of turtles-at 0 -1
+
+  set n1shape [shape] of turtles-at 0 1
+  set n2shape [shape] of turtles-at 1 0
+  set n3shape [shape] of turtles-at 0 -1
+
+  set n1rawwealth [raw-wealth] of turtles-at 0 1
+  set n2rawwealth [raw-wealth] of turtles-at 1 0
+  set n3rawwealth [raw-wealth] of turtles-at 0 -1]
+
+  if (pxcor = 1) mod 2 = 0 and pycor mod 2 = 0 ; bottom right
+  [set n1color [color] of turtles-at 1 0
+  set n2color [color] of turtles-at 1 -1
+  set n3color [color] of turtles-at 0 -1
+
+  set n1who [color] of turtles-at 1 0
+  set n2who [color] of turtles-at 1 -1
+  set n3who [color] of turtles-at 0 -1
+
+  set n1shape [shape] of turtles-at 0 1
+  set n2shape [shape] of turtles-at 1 0
+  set n3shape [shape] of turtles-at 0 -1
+
+  set n1rawwealth [raw-wealth] of turtles-at 0 1
+  set n2rawwealth [raw-wealth] of turtles-at 1 0
+  set n3rawwealth [raw-wealth] of turtles-at 0 -1]
 
 end
 
@@ -2174,7 +2220,6 @@ setup-full repeat 150 [ go ]
   <experiment name="statistics test" repetitions="1" runMetricsEveryStep="true">
     <setup>setup-full</setup>
     <go>go</go>
-    <metric>turtle-id</metric>
     <metric>raw-wealth1</metric>
     <metric>avg-raw</metric>
     <metric>raw75</metric>
@@ -2183,7 +2228,6 @@ setup-full repeat 150 [ go ]
     <metric>raw-std</metric>
     <metric>raw-max</metric>
     <metric>raw-min</metric>
-    <metric>rnge</metric>
     <metric>northwho1</metric>
     <metric>northshape1</metric>
     <enumeratedValueSet variable="exchange_rate">

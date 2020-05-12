@@ -2174,7 +2174,6 @@ setup-full repeat 150 [ go ]
   <experiment name="statistics test" repetitions="1" runMetricsEveryStep="true">
     <setup>setup-full</setup>
     <go>go</go>
-    <metric>turtle-id</metric>
     <metric>raw-wealth1</metric>
     <metric>avg-raw</metric>
     <metric>raw75</metric>
@@ -2183,7 +2182,8 @@ setup-full repeat 150 [ go ]
     <metric>raw-std</metric>
     <metric>raw-max</metric>
     <metric>raw-min</metric>
-    <metric>rnge</metric>
+    <metric>northwho1</metric>
+    <metric>northshape1</metric>
     <enumeratedValueSet variable="exchange_rate">
       <value value="0.2"/>
     </enumeratedValueSet>
