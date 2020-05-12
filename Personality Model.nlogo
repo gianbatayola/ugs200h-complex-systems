@@ -46,7 +46,7 @@ globals [
   westneighborcolor     ;; color of the neighbor in west
   scale
   in
-
+  cluster                
 ]
 
 to setup-empty
@@ -97,24 +97,22 @@ to initialize-variables
   set percentile25 0
   set scale 1
   set in 1
-
+  set cluster -1
 end
 
 ;; creates a new agent in the world
 to create-turtle  ;; patch procedure
   sprout 1 [
-    set raw-wealth random-normal 50 25
+    set raw-wealth random-float 100
     if raw-wealth > 75 [ set color white]
     if raw-wealth <= 75 and raw-wealth > 50 [ set color green ]
     if raw-wealth <= 50 and raw-wealth > 25 [ set color yellow ]
     if raw-wealth <= 25 [ set color red ]
     set scaled-wealth raw-wealth
     set original raw-wealth
-    ;; determine the strategy for interacting with someone of the same color
-    set cooperate-with-same? (random-float 1.0 < chance-cooperate-with-same)
-    ;; determine the strategy for interacting with someone of a different color
-    set cooperate-with-different? (random-float 1.0 < chance-cooperate-with-different)
-    ;; change the shape of the agent on the basis of the strategy
+    ifelse xcor mod 2 = 1 [set cooperate-with-same? true] [set cooperate-with-same? false]
+    ifelse ycor mod 2 = 1 [set cooperate-with-different? true] [set cooperate-with-different? false]
+
     set interactable 0
 
     update-shape
@@ -135,43 +133,30 @@ to clear-stats
   set defother 0
   set meetother 0
   set coopother 0
-  ;;set northneighborcolor 0
-  ;;set eastneighborcolor 0
-  ;;set southneighborcolor 0
-  ;;set westneighborcolor 0
+  set cluster 0
 end
 
 ;; the main routine
 to go
   clear-stats     ;; clear the turn based stats
-  ;;immigrate       ;; new agents immigrate into the world
-  ;;ask turtles [update-state]
+
   ask turtles [update-state-team]
   ask turtles [resetraw]
-  ;; reset the probability to reproduce
-  ;;ask turtles [ set ptr initial-ptr ]
-  set wealth-list []
-  ;; have all of the agents interact with other agents if they can
 
-  ;;ask turtles [ interact ]
+  set wealth-list []
+
   ask turtles [interact-team]
-  ;;ask turtles [self-gain]
+
   ask turtles [self-gain-team]
   ask turtles [addwealth]
   set wealth-list sort-by > wealth-list
   if length wealth-list > 0 [set scale first wealth-list]
   ask turtles[toscale]
-  ;get-percentiles
-  ;;ask turtles [colorandscale]
-  ;; transact and then update your location
-  ;;ask turtles with [ wealth > 0 ] [ transact ]
-  ;; now they reproduce
-  ;;ask turtles [ reproduce ]
-  ;;death           ;; kill some of the agents
-  update-stats    ;; update the states for the aggregate and last 100 ticks
-  ;;ask turtles [recolor]
+
+  update-stats
+  ask turtles [clustering-team]
   recolor-turtles
-  death
+
 
   tick
   if ticks mod check-grades-every = 0 [
@@ -195,16 +180,47 @@ to form-teams
   ]
 end
 
+to clustering-team  ;; turtle procedure
+  let total-same 0.0
+  let myid xcor mod 2 + 2 * (ycor mod 2)
+  let decider [[0 -1] [1 0] [1 -1] ]
+  if myid = 0
+  [set decider [[0 -1] [1 0] [1 -1] ] ] ;; create list of locations
+  if myid = 1
+  [ set decider [[-1 -1] [-1 0] [0 -1] ]
+  ]
 
-to self-gain
-  if interactable = 0 [set raw-wealth raw-wealth * self-gain-rate]
+  if myid = 2
+  [ set decider [[0 1] [1 0] [1 1] ]
+  ]
+
+  if myid = 3
+  [ set decider [[-1 0] [0 1] [-1 1] ]
+  ]
+  while [length decider > 0 ]         ;; must still have locations and be interactable
+  [
+     let location first decider
+    let x1 first location
+    let y1 last location
+   if length [interactable] of turtles-at x1 y1 > 0  ;; make sure turtle exists at location
+   [
+    
+      let neighborcolor first [color] of turtles-at x1 y1
+      if (neighborcolor = color)
+      [
+         set total-same total-same + 1 
+      ]
+
+    
+  ]
+    set decider remove location decider  ;;remove location used
+  ]
+   set total-same total-same / 676
+   set cluster cluster + total-same
 end
 
-to update-state
- if interactable > 0 [set interactable interactable - 1]
- let leave floor random-exponential 1  ;; maybe future use slider 1 = mean of dirstibution
- set interactable interactable + leave
-end
+
+
 
 to update-state-team
  if interactable > 0 [set interactable 0]
@@ -214,16 +230,7 @@ end
 to resetraw
  set raw-wealth scaled-wealth
 end
-;to get-percentiles
- ; set percentile50 median wealth-list
-  ;let ending length wealth-list
-  ;let middle ending * .5
-  ;let lower sublist wealth-list middle ending
-  ;let upper sublist wealth-list 0 middle
-  ;set percentile75 median upper
-  ;set percentile25 median lower
 
-;end
 
 to addwealth
   set wealth-list fput raw-wealth wealth-list
@@ -231,108 +238,6 @@ end
 
 to toscale
   set scaled-wealth raw-wealth / scale * 100
-end
-;; random individuals enter the world on empty cells
-;;to immigrate
-  ;;let empty-patches patches with [not any? turtles-here]
-  ;; we can't have more immigrants than there are empty patches
-  ;;let how-many min list immigrants-per-day (count empty-patches)
-  ;;ask n-of how-many empty-patches [ create-turtle ]
-;;end
-
-;to recolor
- ; if raw-wealth > percentile75 [set color white]
-  ;if raw-wealth <= percentile75 and raw-wealth > percentile50 [set color green]
-  ;if raw-wealth <= percentile50 and raw-wealth > percentile25 [set color yellow]
-  ;if raw-wealth <= percentile25 [set color red]
-;end
-
-;; random individuals enter the world on empty cells
-;;to immigrate
-  ;;let empty-patches patches with [not any? turtles-here]
-  ;; we can't have more immigrants than there are empty patches
-  ;;let how-many min list immigrants-per-day (count empty-patches)
-  ;;ask n-of how-many empty-patches [ create-turtle ]
-;;end
-
-to transact
-  ;; give a dollar to another turtle
-  ;;set wealth wealth + 1
-  ;;ask one-of other turtles [ set wealth wealth + 1 ]
-  set mine raw-wealth
-  ask one-of turtles-on neighbors4 [set yours raw-wealth]
-  set raw-wealth raw-wealth  + yours * exchange_rate - raw-wealth * cost-of-giving
-  ask one-of turtles-on neighbors4 [set raw-wealth raw-wealth + mine * exchange_rate - raw-wealth * cost-of-giving]
-end
-
-to interact  ;; turtle procedure
-  let decider [[0 1] [1 0] [-1 0] [0 -1]]   ;; create list of locations
-  set decider shuffle decider               ;; shuffle list
-
-  while [interactable = 0 and length decider > 0 ]         ;; must still have locations and be interactable
-  [
-
-
-   ;;set check check + 1
-   let location first decider
-    let x1 first location
-    let y1 last location
-   if length [interactable] of turtles-at x1 y1 > 0  ;; make sure turtle exists at location
-   [
-    set in first [interactable] of turtles-at x1 y1
-    ;; take first location
-    if in = 0    ;; make sure other turtle interatcable
-    [ ;;set check1 check1 + 1
-      let neighborcolor first [color] of turtles-at x1 y1
-      set meet meet + 1
-      set meet-agg meet-agg + 1
-      if (neighborcolor = color)
-      [
-         ;;set check2 check2 + 1
-         set meetown meetown + 1
-         set meetown-agg meetown-agg + 1
-
-         if cooperate-with-same? and  first [cooperate-with-same?] of turtles-at first location last location
-         [   set coopown coopown + 1
-             set coopown-agg coopown-agg + 1
-             set mine raw-wealth
-             set yours first [raw-wealth] of turtles-at x1 y1
-             set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving
-             ask turtles-at x1 y1                          ;; responder now gains
-             [
-                 set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
-                 set interactable 1
-              ]
-             set interactable 1     ;; no more interactions
-
-        ]
-
-    ]
-    if neighborcolor != color
-    [
-       set meetother meetother + 1
-       set meetother-agg meetother-agg + 1
-       if cooperate-with-different? and  first [cooperate-with-different?] of turtles-at x1 y1
-       [
-         set coopother coopother + 1
-         set coopother-agg coopother-agg + 1
-         set mine raw-wealth                             ;; wealth of turtle initiaiting
-         set yours first [raw-wealth] of turtles-at x1 y1   ; weath of responder
-         set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving   ;; new wealth of initiator
-         ask turtles-at x1 y1                          ;; responder now gains
-         [
-             set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
-             set interactable 1
-         ]
-         set interactable 1     ;; no more interactions
-
-    ]
-  ]
-
-   ]
-  ]
-  set decider remove location decider  ;;remove location used
-  ]
 end
 
 to self-gain-team
@@ -372,15 +277,15 @@ to interact-team  ;; turtle procedure
    if length [interactable] of turtles-at x1 y1 > 0  ;; make sure turtle exists at location
    [
     set in first [interactable] of turtles-at x1 y1
-    ;; take first location
+
     if in < 4    ;; make sure other turtle interatcable
-    [ ;;set check1 check1 + 1
+    [ 
       let neighborcolor first [color] of turtles-at x1 y1
       set meet meet + 1
       set meet-agg meet-agg + 1
       if (neighborcolor = color)
       [
-         ;;set check2 check2 + 1
+
          set meetown meetown + 1
          set meetown-agg meetown-agg + 1
 
@@ -390,11 +295,7 @@ to interact-team  ;; turtle procedure
              set mine raw-wealth
              set yours first [raw-wealth] of turtles-at x1 y1
              set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving
-           ;;  ask turtles-at x1 y1                          ;; responder now gains
-           ;;  [
-             ;;    set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
-               ;;  set interactable 1
-             ;; ]
+
              set interactable interactable + 1     ;; no more interactions
 
         ]
@@ -411,11 +312,7 @@ to interact-team  ;; turtle procedure
          set mine raw-wealth                             ;; wealth of turtle initiaiting
          set yours first [raw-wealth] of turtles-at x1 y1   ; weath of responder
          set raw-wealth raw-wealth  + yours * exchange_rate - mine * cost-of-giving   ;; new wealth of initiator
-         ;;ask turtles-at x1 y1                          ;; responder now gains
-         ;;[
-           ;;  set raw-wealth raw-wealth  + mine * exchange_rate - yours * cost-of-giving
-             ;;set interactable 1
-         ;;]
+
          set interactable interactable + 1    ;; no more interactions
 
     ]
@@ -426,42 +323,8 @@ to interact-team  ;; turtle procedure
   set decider remove location decider  ;;remove location used
   ]
 end
-;; use PTR to determine if the agent gets to reproduce
-;;to reproduce  ;; turtle procedure
-  ;; if a random variable is less than the PTR the agent can reproduce
- ;; if random-float 1.0 < ptr [
-    ;; find an empty location to reproduce into
-   ;; let destination one-of neighbors4 with [not any? turtles-here]
-    ;;if destination != nobody [
-      ;; if the location exists hatch a copy of the current turtle in the new location
-      ;;  but mutate the child
-      ;;hatch 1 [
-        ;;move-to destination
-        ;;mutate
-    ;;  ]
-  ;;  ]
-;;  ]
-;;end
 
-;; modify the children of agents according to the mutation rate
-;;to mutate  ;; turtle procedure
-  ;; mutate the color
-  ;;if random-float 1.0 < mutation-rate [
-    ;;let old-color color
-    ;;while [color = old-color]
-      ;;[ set color random-color ]
-  ;;]
-  ;; mutate the strategy flags;
-  ;; use NOT to toggle the flag
-  ;;if random-float 1.0 < mutation-rate [
-    ;;set cooperate-with-same? not cooperate-with-same?
-  ;;]
-  ;;if random-float 1.0 < mutation-rate [
-    ;;set cooperate-with-different? not cooperate-with-different?
-  ;;]
-  ;; make sure the shape of the agent reflects its strategy
-  ;;update-shape
-;;end
+
 
 to mutate  ;; turtle procedure
   if color != white and random-float 1.0 < mutation-rate [
@@ -472,13 +335,6 @@ to mutate  ;; turtle procedure
   ]
    ;;make sure the shape of the agent reflects its strategy
   update-shape
-end
-
-to death
-  ;; check to see if a random variable is less than the death rate for each agent
-  ask turtles [
-    if random-float 1.0 < death-rate [ die ]
-  ]
 end
 
 ;; make sure the shape matches the strategy
@@ -514,20 +370,6 @@ to recolor-turtles
 
 end
 
-
-;to scale100  ;; scaling everything to base 100
- ; set wealth-list sort-on[raw-wealth] turtles
- ; let counter 0
- ; let scale  [raw-wealth] of item 0 turtles-list / 100
- ; while [counter < length turtles-list]
-  ;[
-    ;;set [scaled-wealth] of item counter mylist  [wealth] of item counter mylist * scale
-    ;; change list to array to make mutable
-   ; set counter counter + 1
-  ;]
-
-;end
-;; this routine calculates a moving average of some stats over the last 100 ticks
 to update-stats
   ;;set last100dd        shorten lput (count turtles with [shape = "square 2"]) last100dd
   ;;set last100cc        shorten lput (count turtles with [shape = "circle"]) last100cc
