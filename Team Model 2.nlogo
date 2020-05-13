@@ -902,7 +902,7 @@ mutation-rate
 mutation-rate
 0.0
 1.0
-0.0
+0.1
 0.0010
 1
 NIL
@@ -1127,7 +1127,7 @@ check-grades-every
 check-grades-every
 1
 100
-100.0
+1.0
 1
 1
 days
@@ -1152,7 +1152,7 @@ self-gain-rate
 self-gain-rate
 1
 2
-1.3
+1.1
 0.01
 1
 NIL
@@ -2171,7 +2171,199 @@ setup-full repeat 150 [ go ]
       <value value="0.5"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="statistics test" repetitions="1" runMetricsEveryStep="true">
+  <experiment name="Von Neumann Scenario 1 Check 100" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>raw-wealth1</metric>
+    <metric>turtle-list1</metric>
+    <metric>color-list1</metric>
+    <metric>shape-list1</metric>
+    <metric>northcolor1</metric>
+    <metric>eastcolor1</metric>
+    <metric>southcolor1</metric>
+    <metric>westcolor1</metric>
+    <metric>northwho1</metric>
+    <metric>eastwho1</metric>
+    <metric>southwho1</metric>
+    <metric>westwho1</metric>
+    <metric>northshape1</metric>
+    <metric>eastshape1</metric>
+    <metric>southshape1</metric>
+    <metric>westshape1</metric>
+    <metric>northrawwealth1</metric>
+    <metric>eastrawwealth1</metric>
+    <metric>southrawwealth1</metric>
+    <metric>westrawwealth1</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.15"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0.1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Von Neumann Scenario 1 Check 20" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>raw-wealth1</metric>
+    <metric>turtle-list1</metric>
+    <metric>color-list1</metric>
+    <metric>shape-list1</metric>
+    <metric>northcolor1</metric>
+    <metric>eastcolor1</metric>
+    <metric>southcolor1</metric>
+    <metric>westcolor1</metric>
+    <metric>northwho1</metric>
+    <metric>eastwho1</metric>
+    <metric>southwho1</metric>
+    <metric>westwho1</metric>
+    <metric>northshape1</metric>
+    <metric>eastshape1</metric>
+    <metric>southshape1</metric>
+    <metric>westshape1</metric>
+    <metric>northrawwealth1</metric>
+    <metric>eastrawwealth1</metric>
+    <metric>southrawwealth1</metric>
+    <metric>westrawwealth1</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.15"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="20"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0.1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Von Neumann Scenario 1 Check 10" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>raw-wealth1</metric>
+    <metric>turtle-list1</metric>
+    <metric>color-list1</metric>
+    <metric>shape-list1</metric>
+    <metric>northcolor1</metric>
+    <metric>eastcolor1</metric>
+    <metric>southcolor1</metric>
+    <metric>westcolor1</metric>
+    <metric>northwho1</metric>
+    <metric>eastwho1</metric>
+    <metric>southwho1</metric>
+    <metric>westwho1</metric>
+    <metric>northshape1</metric>
+    <metric>eastshape1</metric>
+    <metric>southshape1</metric>
+    <metric>westshape1</metric>
+    <metric>northrawwealth1</metric>
+    <metric>eastrawwealth1</metric>
+    <metric>southrawwealth1</metric>
+    <metric>westrawwealth1</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.15"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0.1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Von Neumann Scenario 1 Check 1" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>raw-wealth1</metric>
+    <metric>turtle-list1</metric>
+    <metric>color-list1</metric>
+    <metric>shape-list1</metric>
+    <metric>northcolor1</metric>
+    <metric>eastcolor1</metric>
+    <metric>southcolor1</metric>
+    <metric>westcolor1</metric>
+    <metric>northwho1</metric>
+    <metric>eastwho1</metric>
+    <metric>southwho1</metric>
+    <metric>westwho1</metric>
+    <metric>northshape1</metric>
+    <metric>eastshape1</metric>
+    <metric>southshape1</metric>
+    <metric>westshape1</metric>
+    <metric>northrawwealth1</metric>
+    <metric>eastrawwealth1</metric>
+    <metric>southrawwealth1</metric>
+    <metric>westrawwealth1</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.15"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0.1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Von Neumann Scenario 2 Check 100" repetitions="1" runMetricsEveryStep="true">
     <setup>setup-full</setup>
     <go>go</go>
     <metric>raw-wealth1</metric>
@@ -2201,7 +2393,7 @@ setup-full repeat 150 [ go ]
       <value value="100"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="self-gain-rate">
-      <value value="1.3"/>
+      <value value="1.1"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="cost-of-giving">
       <value value="0.05"/>
@@ -2210,7 +2402,103 @@ setup-full repeat 150 [ go ]
       <value value="0.5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="mutation-rate">
+      <value value="0.1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
       <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Von Neumann Scenario 2 Check 10" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>raw-wealth1</metric>
+    <metric>turtle-list1</metric>
+    <metric>color-list1</metric>
+    <metric>shape-list1</metric>
+    <metric>northcolor1</metric>
+    <metric>eastcolor1</metric>
+    <metric>southcolor1</metric>
+    <metric>westcolor1</metric>
+    <metric>northwho1</metric>
+    <metric>eastwho1</metric>
+    <metric>southwho1</metric>
+    <metric>westwho1</metric>
+    <metric>northshape1</metric>
+    <metric>eastshape1</metric>
+    <metric>southshape1</metric>
+    <metric>westshape1</metric>
+    <metric>northrawwealth1</metric>
+    <metric>eastrawwealth1</metric>
+    <metric>southrawwealth1</metric>
+    <metric>westrawwealth1</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="10"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0.1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-rate">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-different">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Von Neumann Scenario 2 Check 1" repetitions="1" runMetricsEveryStep="true">
+    <setup>setup-full</setup>
+    <go>go</go>
+    <metric>raw-wealth1</metric>
+    <metric>turtle-list1</metric>
+    <metric>color-list1</metric>
+    <metric>shape-list1</metric>
+    <metric>northcolor1</metric>
+    <metric>eastcolor1</metric>
+    <metric>southcolor1</metric>
+    <metric>westcolor1</metric>
+    <metric>northwho1</metric>
+    <metric>eastwho1</metric>
+    <metric>southwho1</metric>
+    <metric>westwho1</metric>
+    <metric>northshape1</metric>
+    <metric>eastshape1</metric>
+    <metric>southshape1</metric>
+    <metric>westshape1</metric>
+    <metric>northrawwealth1</metric>
+    <metric>eastrawwealth1</metric>
+    <metric>southrawwealth1</metric>
+    <metric>westrawwealth1</metric>
+    <enumeratedValueSet variable="exchange_rate">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="check-grades-every">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="self-gain-rate">
+      <value value="1.1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cost-of-giving">
+      <value value="0.05"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="chance-cooperate-with-same">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="mutation-rate">
+      <value value="0.1"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="death-rate">
       <value value="0"/>
